@@ -5,6 +5,6 @@
 @endsection
 
 @section('content')
-<h1>about us among us</h1>
+<h1>hakas republic</h1>
 
 @endsection
