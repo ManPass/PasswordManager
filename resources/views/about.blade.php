@@ -6,5 +6,4 @@
 
 @section('content')
 <h1>about us among us</h1>
-Rodion Loh
 @endsection
