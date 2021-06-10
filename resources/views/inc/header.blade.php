@@ -5,5 +5,6 @@ border-bottom shadow-sm">
         <a class="p-2 text-dark" href="/"> Home</a>
         <a class="p-2 text-dark" href="/about">About</a>
         <a class="p-2 text-dark" href="/contant">Contact</a>
+        <a class="p-2 text-dark" href="/NULLPTR">Contact</a>
     </nav>
 </div>
