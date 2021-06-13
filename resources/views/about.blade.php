@@ -5,8 +5,7 @@
 @endsection
 
 @section('content')
-<<<<<<< HEAD
-<h1>hakas  rodion loh</h1>
+
 =======
 <h1>hakas republic</h1>
 <h1>От димы</h1>
