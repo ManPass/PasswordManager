@@ -1,6 +1,6 @@
 @section('aside')
     <div class="aside">
-        <h4> aside panel </h4>
+        <h4> Navigation </h4>
         some content
         @show
     </div>
