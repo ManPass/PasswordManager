@@ -9,6 +9,7 @@ class MysqlQueryBuilder implements SQLQueryBuilder{
     }
 
     public function where(string $field, string $value, string $operator= '='):SQLQueryBuilder{
+        $lol = "lol";
         return $this;
     }
     public function limit(int $start, int $offset):SQLQueryBuilder{
