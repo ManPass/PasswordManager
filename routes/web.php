@@ -36,3 +36,4 @@ Route::post('contact/submit', function(){
 })->name('contact-form');//Именованное определение Url адреса
 */
 Route::post('contact/submith','ContactController@submith')->name('contact-form');
+Route::get('contact/myInfo','ContactController@myInfo')->name('contact-data');

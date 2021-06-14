@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\ContactRequest;
 use App\Models\Contact;
 use App\Models\Users;
+use App\Models\Role;
 
 class ContactController extends Controller
 {
@@ -24,5 +25,8 @@ class ContactController extends Controller
         $user->save();
 
         return redirect()->route('home');
+    }
+    public function myInfo(){
+        return view("myInfo",["data" => Users::all(), "role" => Role::all()]);
     }
 }
