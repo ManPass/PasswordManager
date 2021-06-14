@@ -1,3 +1,4 @@
 /PasswordManager
 /vendor
 /.vscode
+.gitignore
