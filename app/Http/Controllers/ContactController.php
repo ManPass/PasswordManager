@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\ContactRequest;
+use App\Models\Contact;
+use App\Models\Users;
+
 class ContactController extends Controller
 {
     public function submith(ContactRequest $req){
@@ -11,6 +14,15 @@ class ContactController extends Controller
         //    'password' => 'required|min:5|max:15',
         //    'email' => 'required|email'
         //]);
-        return "Your registration was successful";
+        $user = new Users();
+        $user->name = $req->input("name");
+        $user->accountEmail = $req->input("email");
+        $user->accountPassword = $req->input("password");
+        
+        $user->RoleID = 3;//default
+
+        $user->save();
+
+        return redirect()->route('home');
     }
 }
