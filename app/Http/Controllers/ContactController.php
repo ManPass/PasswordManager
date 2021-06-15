@@ -16,11 +16,11 @@ class ContactController extends Controller
         //    'email' => 'required|email'
         //]);
         $user = new Users();
-        $user->name = $req->input("name");
-        $user->accountEmail = $req->input("email");
-        $user->accountPassword = $req->input("password");
+        //$user->name = $req->input("name");
+        $user->login = $req->input("email");
+        $user->password = $req->input("password");
         
-        $user->RoleID = 3;//default
+        //$user->RoleID = 3;//default
 
         $user->save();
 
