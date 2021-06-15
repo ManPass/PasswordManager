@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title-block')
-    Contact
+    registraion
 @endsection
 
 @section('content')
