@@ -27,6 +27,7 @@ class ContactController extends Controller
         return redirect()->route('home');
     }
     public function myInfo(){
-        return view("myInfo",["data" => Users::all(), "role" => Role::all()]);
+        //return view("myInfo",["data" => Users::all(), "role" => Role::all()]);
+        return view("myInfo",["data" => users::all()]);
     }
 }
