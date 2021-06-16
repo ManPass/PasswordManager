@@ -30,7 +30,7 @@ Route::get('/default',function(){
     return view('welcome');
 });
 
-Route::get('/add', function(){
+Route::get('/records/add', function(){
     return view('add');
 })->name('add');
 
@@ -39,7 +39,7 @@ Route::post('contact/submit', function(){
     dd(Request::all());
 })->name('contact-form');//Именованное определение Url адреса
 */
-Route::post('records/submith','RecordsController@submith')->name('records-form');
+Route::post('records/submit','RecordsController@submit')->name('records-form');
 Route::get('records/myInfo','RecordsController@showAllRecords')->name('records-data');
 
 Route::post('contact/submith','ContactController@submith')->name('contact-form');

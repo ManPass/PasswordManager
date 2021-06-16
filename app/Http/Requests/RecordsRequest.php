@@ -13,7 +13,7 @@ class RecordsRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,12 @@ class RecordsRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'source' => 'required|min:2|max:50',
+            'pass' => 'required|min:3|max:50',
+            'login' => 'max:50',
+            'url' => 'nullable|max:50|url',
+            'comment' => '',
+            'tag' => 'regex:([\w]+(,[\w]+)*)'
         ];
     }
 }

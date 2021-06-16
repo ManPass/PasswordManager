@@ -5,10 +5,10 @@
 @endsection
 
 @section('content')
-<h1>Info</h1>
+<h1>Список паролей:</h1>
     @foreach ( $data as $el )
         <div class="alert alert-info">
-            <h3>{{$el->login}}</h3>
+            <h3>{{$el->source}}</h3>
             <p>{{$el->password}}</p>
             
             <a href="#"><button class="btn btn-success">Detail</button></a>
