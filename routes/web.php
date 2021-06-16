@@ -41,3 +41,6 @@ Route::post('contact/submit', function(){
 */
 Route::post('records/submith','RecordsController@submith')->name('records-form');
 Route::get('records/myInfo','RecordsController@showAllRecords')->name('records-data');
+
+Route::post('contact/submith','ContactController@submith')->name('contact-form');
+Route::get('contact/myInfo','ContactController@myInfo')->name('contact-data');
