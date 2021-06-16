@@ -30,10 +30,14 @@ Route::get('/default',function(){
     return view('welcome');
 });
 
+Route::get('/add', function(){
+    return view('add');
+})->name('add');
+
 /* Заглушка
 Route::post('contact/submit', function(){
     dd(Request::all());
 })->name('contact-form');//Именованное определение Url адреса
 */
-Route::post('contact/submith','ContactController@submith')->name('contact-form');
-Route::get('contact/myInfo','ContactController@myInfo')->name('contact-data');
+Route::post('records/submith','RecordsController@submith')->name('records-form');
+Route::get('records/myInfo','RecordsController@showAllRecords')->name('records-data');
