@@ -5,9 +5,15 @@
 @endsection
 
 @section('aside')
-    <form action=""
+<form action="{{route('records-form')}}" method="post">
+        @csrf
+        <div class="form-group">
+            <label for="search">Поиск </label>
+            <input type="text" name="search" placeholder="От чего нужен пароль?" id="search" class="form-control">
+        </div>
+    </form>
 @endsection
-
+    
 @section('content')
 <h1>Список паролей:</h1>
     @foreach ( $data as $el )

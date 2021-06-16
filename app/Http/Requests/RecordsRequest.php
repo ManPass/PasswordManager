@@ -28,8 +28,8 @@ class RecordsRequest extends FormRequest
             'pass' => 'required|min:3|max:50',
             'login' => 'max:50',
             'url' => 'nullable|max:50|url',
-            'comment' => '',
-            'tag' => 'regex:([\w]+(,[\w]+)*)'
+            'comment' => 'nullable|max:255',
+            'tag' => 'nullable|regex:([\w]+(,[\w]+)*)|max:30'
         ];
     }
 }
