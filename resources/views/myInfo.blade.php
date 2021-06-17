@@ -27,6 +27,8 @@
                 <p>URL: {{$el->url}}</p>
             @endif
             <a href="#"><button class="btn btn-success">Показать пароль</button></a>
+            <a href="{{ route('record-edit', $el->id)}}"><button class="btn btn-success">Редактировать</button></a>
+            <a href="{{ route('record-delete', $el->id)}}"><button class="btn btn-success">Удалить</button></a>
         </div>
     @endforeach
 

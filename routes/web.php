@@ -46,5 +46,10 @@ Route::post('contact/submit', function(){
 Route::post('records/submit','RecordsController@submit')->name('records-form');
 Route::get('records/myInfo','RecordsController@showAllRecords')->name('records-data');
 
-Route::post('contact/submith','ContactController@submith')->name('contact-form');
+Route::post('records/edit/{id}/update','RecordsController@updateSubmit')->name('record-update'); 
+Route::get('records/edit/{id}','RecordsController@editRecord')->name('record-edit'); //для изменения запИси
+Route::get('records/delete/{id}','RecordsController@deleteRecord')->name('record-delete');//для удаления
+
+Route::post('contact/submith','ContactController@submith')->name('contact-form'); //чё за субмитх?
 Route::get('contact/myInfo','ContactController@myInfo')->name('contact-data');
+
