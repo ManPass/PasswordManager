@@ -21,6 +21,9 @@ class UserRole extends Migration
             $table->foreign("role_id")->references("id")->on("roles")->onUpdate("cascade")->onDelete("cascade");
             $table->foreign("user_id")->references("id")->on("users")->onUpdate("cascade")->onDelete("cascade");
 
+            $table->rememberToken();
+            $table->timestamps();
+
         });
     }
 
