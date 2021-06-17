@@ -27,7 +27,7 @@ class RecordsController extends Controller
     {
         $record = Records::find($id);
         $record->source = $request->input('source');
-        $record->password = $request->input('pass');
+        //$record->password = $request->input('pass');
         $record->login = $request->input('login');
         $record->url = $request->input('url');
         $record->comment = $request->input('comment');

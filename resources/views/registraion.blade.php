@@ -16,7 +16,12 @@
             </ul>
         </div>
     @endif
-    <form action="{{ route('contact-form') }}" method="post">
+    <form action="{{ route('registraion-submith') }}" method="post">
+        @if(session('message'))
+            <div class="alert alert-danger">
+                {{session('message')}}
+            </div>
+        @endif
         @csrf
         <div class="form-group">
             <label for="name">Name</label>
@@ -25,7 +30,7 @@
 
         <div class="form-group">
             <label for="email">Email</label>
-            <input type="text" name="email" placeholder="Input email" id="email" class="form-control">
+            <input type="text" name="login" placeholder="Input email" id="login" class="form-control">
         </div>
 
         <div class="form-group">

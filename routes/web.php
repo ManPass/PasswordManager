@@ -22,17 +22,22 @@ Route::get('/about',function(){
     return view('about');
 })->name('about');
 
-Route::get('/registraion',function(){
-    return view('registraion');
-})->name('registraion');
-
 Route::get('/default',function(){
     return view('welcome');
 });
-//login
+
+//login web
 Route::get('/login',function(){
     return view('login');
 })->name('login');
+//login-sumbith
+Route::post('/login/submith','AuthController@login')->name('login-submith');
+//registraion web
+Route::get('/registraion',function(){
+    return view('registraion');
+})->name('registraion');
+//registraion-submith
+Route::post('/login','AuthController@registration')->name('registraion-submith');
 
 Route::get('/records/add', function(){
     return view('add');
@@ -50,6 +55,8 @@ Route::post('records/edit/{id}/update','RecordsController@updateSubmit')->name('
 Route::get('records/edit/{id}','RecordsController@editRecord')->name('record-edit'); //для изменения запИси
 Route::get('records/delete/{id}','RecordsController@deleteRecord')->name('record-delete');//для удаления
 
-Route::post('contact/submith','ContactController@submith')->name('contact-form'); //чё за субмитх?
+//Route::post('contact/submith','ContactController@submith')->name('contact-form'); //чё за субмитх?//Паша=> это очень старый роут тестовый, можно удалить если не нид
 Route::get('contact/myInfo','ContactController@myInfo')->name('contact-data');
+
+
 

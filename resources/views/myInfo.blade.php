@@ -28,7 +28,7 @@
             @endif
             <a href="#"><button class="btn btn-success">Показать пароль</button></a>
             <a href="{{ route('record-edit', $el->id)}}"><button class="btn btn-success">Редактировать</button></a>
-            <a href="{{ route('record-delete', $el->id)}}"><button class="btn btn-success">Удалить</button></a>
+            <a href="{{ route('record-delete', $el->id)}}"><button class="btn btn-danger">Удалить</button></a>
         </div>
     @endforeach
 
