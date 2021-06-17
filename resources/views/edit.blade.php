@@ -28,7 +28,7 @@
 
         <div class="form-group">
             <label for="pass">Пароль: *</label>
-            <input type="password" name="pass" value="{{$data->password}}" id="pass" class="form-control">
+            <input type="password" name="pass" value="{{decrypt($data->password)}}" id="pass" class="form-control">
         </div>
 
         <div class="form-group">
@@ -56,6 +56,7 @@
         </div>
 
         <button type="submit" class="btn btn-success">Сохранить</button>
+        <a href="{{ route('record-show', $data->id)}}"><button class="btn btn-success">Назад</button></a>
     
     </form>
     @endsection

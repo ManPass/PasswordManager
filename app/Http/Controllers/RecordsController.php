@@ -6,14 +6,15 @@ use Illuminate\Http\Request;
 use App\Http\Requests\RecordsRequest;
 use App\Models\Records;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Contracts\Encryption\DecryptException;
 
 class RecordsController extends Controller
 {
-    public function submit(RecordsRequest $request)
+    public function addRecord(RecordsRequest $request)
     {
         $record = new Records();
         $record->source = $request->input('source');
-        $record->password = $request->input('pass');
+        $record->password = encrypt($request->input('pass'));
         $record->login = $request->input('login');
         $record->url = $request->input('url');
         $record->comment = $request->input('comment');
@@ -26,14 +27,14 @@ class RecordsController extends Controller
 
     public function showRecord($id)
     {
+        $records = Records::find($id);
         return view('show', ['data' => Records::find($id)]);
     }
 
     public function searchRecord(RecordsRequest $request)
     {
         $search = $request->input('search');
-        $records = Records::where('source', 'LIKE', "%($search)%")->paginate(10);
-        
+        $records = Records::where('source', 'LIKE', "%($search)%")->paginate(10);        
         return view("myInfo", ['data' => $records]);
     }
 
@@ -41,7 +42,7 @@ class RecordsController extends Controller
     {
         $record = Records::find($id);
         $record->source = $request->input('source');
-        $record->password = $request->input('pass');
+        $record->password = encrypt($request->input('pass'));
         $record->login = $request->input('login');
         $record->url = $request->input('url');
         $record->comment = $request->input('comment');

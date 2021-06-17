@@ -5,8 +5,8 @@
 @endsection
 
 @section('aside')
-<form method="get" action="{{ route('record-search') }}">
-        <!--@csrf-->
+<form action="{{ route('record-search') }}" method="get" >
+        @csrf
         <div class="form-group">
             <label for="search">Поиск </label>
             <input type="text" name="search" placeholder="Поиск..." id="search" class="form-control">
@@ -24,26 +24,29 @@
         </div>
     </form>
 @endsection
-    
+   
 @section('content')
 <h1>Список паролей:</h1>
-@if(isset($data) || count($data))
-    @foreach ( $data as $el )
-        <div class="alert alert-info">
-            <h2>{{$el->source}}</h2>
-            @if(isset($el->comment))
-                <h3>{{$el->comment}}</h3>
-            @endif
-            @if(isset($el->login))
-                <p>Логин: {{$el->login}}</p>
-            @endif
-            @if (isset($el->url))
-                <p>URL: {{$el->url}}</p>
-            @endif
-            <a href="{{ route('record-show', $el->id)}}"><button class="btn btn-success">Открыть</button></a>
+        <div class = "form-group">
+            <a href="{{ route('add')}}"><button class="btn btn-success">Добавить</button></a>
         </div>
-    @endforeach
-@else
-    <h1>У вас нет сохранённых паролей.</h1>
-@endif
+    @if(isset($data) || count($data))
+        @foreach ( $data as $el )
+            <div class="alert alert-info">
+                <h2>{{$el->source}}</h2>
+                @if(isset($el->comment))
+                    <h3>{{$el->comment}}</h3>
+                @endif
+                @if(isset($el->login))
+                    <p>Логин: {{$el->login}}</p>
+                @endif
+                @if (isset($el->url))
+                    <p>URL: {{$el->url}}</p>
+                @endif
+                <a href="{{ route('record-show', $el->id)}}"><button class="btn btn-success">Открыть</button></a>
+            </div>
+        @endforeach
+    @else
+        <h1>У вас нет сохранённых паролей.</h1>
+    @endif
 @endsection

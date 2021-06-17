@@ -29,8 +29,7 @@ class RecordsRequest extends FormRequest
             'login' => 'max:50',
             'url' => 'nullable|min:5|max:255|url',
             'comment' => 'nullable|max:255',
-            'tag' => 'nullable|regex:([\D]+(,[\D]+)*)|max:100',
-            'search' => 'nullable'
+            'tag' => 'nullable|regex:([\D]+(,[\D]+)*)|max:100'
         ];
     }
 }

@@ -17,7 +17,7 @@ class Records extends Migration
             Schema::create('records', function (Blueprint $table) {
                 $table->increments("id");
                 $table->string("source");
-                $table->string("password");
+                $table->string("password", 255);
                 $table->string("login")->nullable();
                 $table->string("url")->nullable();
                 $table->text("comment")->nullable();

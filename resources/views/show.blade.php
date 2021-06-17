@@ -8,7 +8,7 @@
 <h1>Не забудьте закрыть страницу!</h1>
         <div class="alert alert-info">
             <h2>Пароль для {{$data->source}}</h2>
-            <p>Ваш пароль: {{$data->password}}</p>
+            <p>Ваш пароль: {{decrypt($data->password)}}</p>
             @if(isset($data->comment))
                 <h4>Комментарий: {{$data->comment}}</h4>
             @else
