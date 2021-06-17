@@ -1,11 +1,12 @@
-@extends('layouts.app')
+@extends('layouts.app_auth')
 
 @section('title-block')
     registraion
 @endsection
 
 @section('content')
-    <h1>Registration</h1>
+    
+    <div class="login-page">
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
@@ -18,12 +19,12 @@
     <form action="{{ route('contact-form') }}" method="post">
         @csrf
         <div class="form-group">
-            <label for="name">Input Name</label>
+            <label for="name">Name</label>
             <input type="text" name="name" placeholder="Input name" id="name" class="form-control">
         </div>
 
         <div class="form-group">
-            <label for="email">Input Email</label>
+            <label for="email">Email</label>
             <input type="text" name="email" placeholder="Input email" id="email" class="form-control">
         </div>
 
@@ -35,4 +36,5 @@
         <button type="submit" class="btn btn-success">Submit</button>
         
     </form>
+    </div>
 @endsection

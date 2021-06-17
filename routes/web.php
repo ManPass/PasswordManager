@@ -29,7 +29,10 @@ Route::get('/registraion',function(){
 Route::get('/default',function(){
     return view('welcome');
 });
-
+//login
+Route::get('/login',function(){
+    return view('login');
+})->name('login');
 /* Заглушка
 Route::post('contact/submit', function(){
     dd(Request::all());
