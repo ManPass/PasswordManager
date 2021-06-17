@@ -33,10 +33,18 @@ Route::get('/default',function(){
 Route::get('/login',function(){
     return view('login');
 })->name('login');
+
+Route::get('/records/add', function(){
+    return view('add');
+})->name('add');
+
 /* Заглушка
 Route::post('contact/submit', function(){
     dd(Request::all());
 })->name('contact-form');//Именованное определение Url адреса
 */
+Route::post('records/submit','RecordsController@submit')->name('records-form');
+Route::get('records/myInfo','RecordsController@showAllRecords')->name('records-data');
+
 Route::post('contact/submith','ContactController@submith')->name('contact-form');
 Route::get('contact/myInfo','ContactController@myInfo')->name('contact-data');
