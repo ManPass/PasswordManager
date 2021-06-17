@@ -19,10 +19,10 @@ class AuthController extends Controller
         }
         if($user != null) {//если юзер найден то создаем ему сессию на 60 минут
             $coockie=cookie('login',$request->input('login'),60);
-            $coockieValid=cookie('valid','true',60);//можно сюда припесать токен
+            $coockieValid=cookie('valid','true',60);//можно сюда приписать токен
         }
         else {
-            return redirect()->route('login')->with("message","wrong email or password");//если его нет то бекаем его
+            return redirect()->route('login')->with("message","wrong email or password");//если юзера нет то бекаем его
         }
         
         //$loginCookie = $request->cookie('login'); //получение коков
@@ -31,17 +31,20 @@ class AuthController extends Controller
         //    echo $request->cookie('login'). ' ' . $request->cookie('valid');
         //}
         
-        //return response('home')->withCookie(cookie('login',$request->input('login'),5));
+        /*сделать переход Route на Home в этом методе
+        *сделать при обращении ко всем роутам проверку куки юзера(регистрацию и аутендификацию)
+        *убрать из стандартного шаблона Registraion и Login, и добавить Logout
+        *убрать из шаблона аутендификации все кроме Registraion и Login
+        */
         return response('login has been success')->withCookie($coockie)->withCookie($coockieValid);
     }
 
     public function registration(RegRequest $request){
         
-        
          foreach(users::all() as $user_el){
             if ($request->input('login') === $user_el->login)
                 return redirect()->route('registraion')->with("message","this email already exist");
-         }
+        }
         
         $user = new Users();
         $user->login = $request->input('login');
