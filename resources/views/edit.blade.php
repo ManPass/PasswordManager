@@ -28,10 +28,10 @@
                 <input type="text" name="source" value= "{{$data->source}}" id="source" class="form-control">
             </div>
 
-            <div class="form-group">
-                <label for="pass">Пароль: *</label>
-                <input type="password" name="pass" value="{{$data->password}}" id="pass" class="form-control">
-            </div>
+        <div class="form-group">
+            <label for="pass">Пароль: *</label>
+            <input type="password" name="pass" value="{{decrypt($data->password)}}" id="pass" class="form-control">
+        </div>
 
             <div class="form-group">
                 <label for="login">Логин:</label>
@@ -57,9 +57,9 @@
                 <label>* - поле является обязательным для заполнения</label>
             </div>
 
-            <button type="submit" class="btn btn-success">Сохранить</button>
-        
-        </form>
-    </div>
+        <button type="submit" class="btn btn-success">Сохранить</button>
+        <a href="{{ route('record-show', $data->id)}}"><button class="btn btn-success">Назад</button></a>
+    
+    </form>
     @endsection
     

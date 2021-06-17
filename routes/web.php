@@ -48,8 +48,12 @@ Route::post('contact/submit', function(){
     dd(Request::all());
 })->name('contact-form');//Именованное определение Url адреса
 */
-Route::post('records/submit','RecordsController@submit')->name('records-form');
-Route::get('records/myInfo','RecordsController@showAllRecords')->name('records-data');
+Route::post('records/submit','RecordsController@addRecord')->name('records-form');
+Route::get('records/','RecordsController@showAllRecords')->name('records-data');
+
+Route::get('records/search', 'RecordsController@searchRecord')->name('record-search');
+
+Route::get('records/show/{id}','RecordsController@showRecord')->name('record-show'); //просмотр
 
 Route::post('records/edit/{id}/update','RecordsController@updateSubmit')->name('record-update'); 
 Route::get('records/edit/{id}','RecordsController@editRecord')->name('record-edit'); //для изменения запИси

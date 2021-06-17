@@ -13,12 +13,12 @@
 <body>
     @include('inc.header')
     
-    <div class="container mt-5">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-8">
+            <div class="col-lg-8">
                 @yield('content')
             </div>
-            <div class="col-4">
+            <div class="col-sm-4">
                 @include('inc.aside')
             </div>
         </div>
