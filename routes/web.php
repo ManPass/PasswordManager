@@ -14,18 +14,6 @@ use Illuminate\Support\Facades\Request;
 |
 */
 
-Route::get('/home', function () {
-    return view('home');
-})->name('home')->middleware('auth');
-
-Route::get('/about',function(){
-    return view('about');
-})->name('about')->middleware('auth');
-
-Route::get('/default',function(){
-    return view('welcome');
-})->middleware('auth');
-
 //login web
 Route::get('/login',function(){
     return view('login');
@@ -40,25 +28,44 @@ Route::get('/registration',function(){
 //registraion-submith
 Route::post('/login','AuthController@registration')->name('registraion-submith');
 
-Route::get('/records/add', function(){
-    return view('add');
-})->name('add')->middleware('auth');
-//logout
-Route::get('/','AuthController@logout')->name('logout')->middleware('auth');
 
-Route::post('records/submit','RecordsController@addRecord')->name('records-form');
-Route::get('records/','RecordsController@showAllRecords')->name('records-data');
-
-Route::get('records/search', 'RecordsController@searchRecord')->name('record-search');
-
-Route::get('records/show/{id}','RecordsController@showRecord')->name('record-show'); //просмотр
-
-Route::post('records/edit/{id}/update','RecordsController@updateSubmit')->name('record-update'); 
-Route::get('records/edit/{id}','RecordsController@editRecord')->name('record-edit'); //для изменения запИси
-Route::get('records/delete/{id}','RecordsController@deleteRecord')->name('record-delete');//для удаления
 
 //Route::post('contact/submith','ContactController@submith')->name('contact-form'); //чё за субмитх?//Паша=> это очень старый роут тестовый, можно удалить если не нид
-Route::get('contact/myInfo','ContactController@myInfo')->name('contact-data');
+
+
+/*
+*Здесь покоятся роуты которые должны быть под защитой
+*помещяйте все роуты для которых необходима авторизация
+*/
+Route::group(['middleware' => ['auth']],function () {
+    Route::get('/records/add', function(){
+        return view('add');
+    })->name('add');
+    Route::get('/home', function () {
+        return view('home');
+    })->name('home');
+    
+    Route::get('/about',function(){
+        return view('about');
+    })->name('about');
+    
+    Route::get('/default',function(){
+        return view('welcome');
+    });
+    Route::get('contact/myInfo','ContactController@myInfo')->name('contact-data');
+    Route::post('records/submit','RecordsController@addRecord')->name('records-form');
+    Route::get('records/','RecordsController@showAllRecords')->name('records-data');
+
+    Route::get('records/search', 'RecordsController@searchRecord')->name('record-search');
+
+    Route::get('records/show/{id}','RecordsController@showRecord')->name('record-show'); //просмотр
+
+    Route::post('records/edit/{id}/update','RecordsController@updateSubmit')->name('record-update'); 
+    Route::get('records/edit/{id}','RecordsController@editRecord')->name('record-edit'); //для изменения запИси
+    Route::get('records/delete/{id}','RecordsController@deleteRecord')->name('record-delete');//для удаления
+    //logout
+    Route::get('/','AuthController@logout')->name('logout');
+});
 
 
 
