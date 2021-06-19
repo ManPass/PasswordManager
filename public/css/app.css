@@ -15,6 +15,11 @@ footer{
   padding: 0 0 5%;
   margin: auto;
 }
+.main-body{
+  width: 1060px;
+  padding: 0 0 0;
+  margin: auto;
+}
 .form {
   position: relative;
   z-index: 1;

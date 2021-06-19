@@ -1,9 +1,13 @@
 @extends('layouts.app')
 
-@section('title-block')
-    Добавление нового пароля
+@section('Personal information')
+    Main Page
 @endsection
 
+@section('aside')
+    
+@endsection
+   
 @section('content')
     <h1>Добавление пароля</h1>
     @if ($errors->any())
@@ -15,6 +19,7 @@
             </ul>
         </div>
     @endif
+    
     <form action="{{ route('records-form')}}" method="post">
         @csrf
         <div class="form-group">
@@ -54,4 +59,5 @@
         <button type="submit" class="btn btn-success">Сохранить</button>
     
     </form>
+    
     @endsection

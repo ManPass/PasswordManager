@@ -6,6 +6,7 @@ use App\Http\Requests\RegRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Route;
 //use App\Http\Requests\RegistraionRequest;
 use App\Models\users;
 class AuthController extends Controller
@@ -18,6 +19,7 @@ class AuthController extends Controller
                 $user = $user_el;
         }
         if($user != null) {//если юзер найден то создаем ему сессию на 60 минут
+            //dd($request->cookie('login'),$request->cookie('valid'));
             $coockie=cookie('login',$request->input('login'),60);
             $coockieValid=cookie('valid','true',60);//можно сюда приписать токен
         }
@@ -36,13 +38,15 @@ class AuthController extends Controller
         *убрать из стандартного шаблона Registraion и Login, и добавить Logout
         *убрать из шаблона аутендификации все кроме Registraion и Login
         */
-        return response('login has been success')->withCookie($coockie)->withCookie($coockieValid);
+        return redirect()->route('home')->withCookie($coockie)->withCookie($coockieValid);
+        //return response('login has been success')->withCookie($coockie)->withCookie($coockieValid);
     }
 
     public function registration(RegRequest $request){
         
          foreach(users::all() as $user_el){
             if ($request->input('login') === $user_el->login)
+                
                 return redirect()->route('registraion')->with("message","this email already exist");
         }
         
@@ -53,5 +57,10 @@ class AuthController extends Controller
         //после регистрации перенаправляет на login
         return redirect()->route('login');
         
+    }
+    public function logout(Request $request){
+        //dd($request);
+        return redirect()->route('login')->withCookie(Cookie::forget('login'))->
+        withCookie(Cookie::forget('valid'));
     }
 }

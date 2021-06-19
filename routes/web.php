@@ -16,24 +16,25 @@ use Illuminate\Support\Facades\Request;
 
 Route::get('/home', function () {
     return view('home');
-})->name('home');
+})->name('home')->middleware('auth');
 
 Route::get('/about',function(){
     return view('about');
-})->name('about');
+})->name('about')->middleware('auth');
 
 Route::get('/default',function(){
     return view('welcome');
-});
+})->middleware('auth');
 
 //login web
 Route::get('/login',function(){
     return view('login');
 })->name('login');
+
 //login-sumbith
 Route::post('/login/submith','AuthController@login')->name('login-submith');
 //registraion web
-Route::get('/registraion',function(){
+Route::get('/registration',function(){
     return view('registraion');
 })->name('registraion');
 //registraion-submith
@@ -41,13 +42,10 @@ Route::post('/login','AuthController@registration')->name('registraion-submith')
 
 Route::get('/records/add', function(){
     return view('add');
-})->name('add');
+})->name('add')->middleware('auth');
+//logout
+Route::get('/','AuthController@logout')->name('logout')->middleware('auth');
 
-/* Заглушка
-Route::post('contact/submit', function(){
-    dd(Request::all());
-})->name('contact-form');//Именованное определение Url адреса
-*/
 Route::post('records/submit','RecordsController@addRecord')->name('records-form');
 Route::get('records/','RecordsController@showAllRecords')->name('records-data');
 

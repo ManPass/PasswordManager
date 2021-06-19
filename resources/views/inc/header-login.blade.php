@@ -4,10 +4,7 @@
         <span class="fs-4">Pricing example</span>
       </a>
       <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
-        <a class="me-3 py-2 text-dark text-decoration-none" href="{{ route('home') }}">Home</a>
-        <a class="me-3 py-2 text-dark text-decoration-none" href="{{ route('about')}}">About</a>
-        <a class="me-3 py-2 text-dark text-decoration-none" href="{{ route('records-data')}}">My Info</a>
-        <a class="me-3 py-2 text-dark text-decoration-none" href="{{ route('add')}}">Add data</a>
-        <a class="me-3 py-2 text-dark text-decoration-none" href="{{route('logout')}}">Logout</a>
+        <a class="me-3 py-2 text-dark text-decoration-none" href="{{ route('login') }}">Login</a>
+        <a class="me-3 py-2 text-dark text-decoration-none" href="{{ route('registraion')}}">Registraion</a>
       </nav>
     </div>
