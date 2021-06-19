@@ -17,14 +17,14 @@ use Illuminate\Support\Facades\Request;
 //login web
 Route::get('/login',function(){
     return view('login');
-})->name('login');
+})->name('login')->middleware('repeater');
 
 //login-sumbith
 Route::post('/login/submith','AuthController@login')->name('login-submith');
 //registraion web
 Route::get('/registration',function(){
     return view('registraion');
-})->name('registraion');
+})->name('registraion')->middleware('repeater');
 //registraion-submith
 Route::post('/login','AuthController@registration')->name('registraion-submith');
 
