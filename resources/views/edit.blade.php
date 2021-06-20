@@ -35,7 +35,7 @@
 
             <div class="form-group">
                 <label for="login">Логин:</label>
-                <input type="text" name="login" value="{{$data->login}}" id="login" class="form-control">
+                <input type="text" name="login_rec" value="{{$data->login}}" id="login" class="form-control">
             </div>
 
             <div class="form-group">

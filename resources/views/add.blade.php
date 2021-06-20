@@ -33,8 +33,8 @@
         </div>
 
         <div class="form-group">
-            <label for="login">Логин:</label>
-            <input type="text" name="login" placeholder="Введите логин" id="login" class="form-control">
+            <label for="login_rec">Логин:</label>
+            <input type="text" name="login_rec" placeholder="Введите логин" id="login" class="form-control">
         </div>
 
         <div class="form-group">

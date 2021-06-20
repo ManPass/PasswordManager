@@ -15,7 +15,7 @@ class RecordsController extends Controller
         $record = new Records();
         $record->source = $request->input('source');
         $record->password = encrypt($request->input('pass'));
-        $record->login = $request->input('login');
+        $record->login = $request->input('login_rec');
         $record->url = $request->input('url');
         $record->comment = $request->input('comment');
         $record->tag = $request->input('tag');
@@ -31,11 +31,10 @@ class RecordsController extends Controller
         return view('show', ['data' => Records::find($id)]);
     }
 
-    public function searchRecord(RecordsRequest $request)
+    public function searchRecord(Request $req)
     {
-        $search = $request->input('search');
-        $records = Records::where('source', 'LIKE', "%($search)%")->paginate(10);        
-        return view("myInfo", ['data' => $records]);
+        $searchRecords = Records::where($req->choose, 'LIKE', "%{$req->search}%")->orderby('source')->paginate(10);
+        return view('myInfo', ['data' => $searchRecords]);
     }
 
     public function updateSubmit($id, RecordsRequest $request)
@@ -43,7 +42,7 @@ class RecordsController extends Controller
         $record = Records::find($id);
         $record->source = $request->input('source');
         $record->password = encrypt($request->input('pass'));
-        $record->login = $request->input('login');
+        $record->login = $request->input('login_rec');
         $record->url = $request->input('url');
         $record->comment = $request->input('comment');
         $record->tag = $request->input('tag');
