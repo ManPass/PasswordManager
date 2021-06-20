@@ -53,7 +53,9 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth' => \App\Http\Middleware\Authenticate::class,
+        //'auth' => \App\Http\Middleware\Authenticate::class, дефолтный аут для шаблона начального
+        'repeater' => \App\Http\Middleware\RepeatedLogin::class,
+        'auth' => \App\Http\Middleware\SecureAuth::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,

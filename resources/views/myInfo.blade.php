@@ -5,6 +5,7 @@
 @endsection
 
 @section('aside')
+<div>
 <form action="{{ route('record-search') }}" method="get" >
         @csrf
         <div class="form-group">
@@ -23,6 +24,7 @@
             <button type="submit" class="btn btn-primary btn-block">Найти</button>
         </div>
     </form>
+</div>
 @endsection
    
 @section('content')

@@ -6,6 +6,7 @@ use App\Http\Requests\RegRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Route;
 //use App\Http\Requests\RegistraionRequest;
 use App\Models\users;
 class AuthController extends Controller
@@ -18,11 +19,12 @@ class AuthController extends Controller
                 $user = $user_el;
         }
         if($user != null) {//если юзер найден то создаем ему сессию на 60 минут
+            //dd($request->cookie('login'),$request->cookie('valid'));
             $coockie=cookie('login',$request->input('login'),60);
-            $coockieValid=cookie('valid','true',60);//можно сюда припесать токен
+            $coockieValid=cookie('valid','true',60);//можно сюда приписать токен
         }
         else {
-            return redirect()->route('login')->with("message","wrong email or password");//если его нет то бекаем его
+            return redirect()->route('login')->with("message","wrong email or password");//если юзера нет то бекаем его
         }
         
         //$loginCookie = $request->cookie('login'); //получение коков
@@ -31,17 +33,22 @@ class AuthController extends Controller
         //    echo $request->cookie('login'). ' ' . $request->cookie('valid');
         //}
         
-        //return response('home')->withCookie(cookie('login',$request->input('login'),5));
-        return response('login has been success')->withCookie($coockie)->withCookie($coockieValid);
+        /*сделать переход Route на Home в этом методе
+        *сделать при обращении ко всем роутам проверку куки юзера(регистрацию и аутендификацию)
+        *убрать из стандартного шаблона Registraion и Login, и добавить Logout
+        *убрать из шаблона аутендификации все кроме Registraion и Login
+        */
+        return redirect()->route('home')->withCookie($coockie)->withCookie($coockieValid);
+        //return response('login has been success')->withCookie($coockie)->withCookie($coockieValid);
     }
 
     public function registration(RegRequest $request){
         
-        
          foreach(users::all() as $user_el){
             if ($request->input('login') === $user_el->login)
+                
                 return redirect()->route('registraion')->with("message","this email already exist");
-         }
+        }
         
         $user = new Users();
         $user->login = $request->input('login');
@@ -50,5 +57,10 @@ class AuthController extends Controller
         //после регистрации перенаправляет на login
         return redirect()->route('login');
         
+    }
+    public function logout(Request $request){
+        //dd($request);
+        return redirect()->route('login')->withCookie(Cookie::forget('login'))->
+        withCookie(Cookie::forget('valid'));
     }
 }
