@@ -5,9 +5,7 @@
 @endsection
 
 @section('aside')
-<div>
-<form action="{{ route('record-search') }}" method="get" >
-        @csrf
+<form method="get" action="{{ route('search') }}">
         <div class="form-group">
             <label for="search">Поиск </label>
             <input type="text" name="search" placeholder="Поиск..." id="search" class="form-control">
@@ -21,19 +19,30 @@
             <label for="login">По логину</label>
         </div>
         <div class = "form-group">
-            <button type="submit" class="btn btn-primary btn-block">Найти</button>
+            <button type="submit" class="btn btn-primary btn-success">Найти</button>
         </div>
-    </form>
-</div>
+</form>
 @endsection
    
 @section('content')
-<h1>Список паролей:</h1>
-        <div class = "form-group">
-            <a href="{{ route('add')}}"><button class="btn btn-success">Добавить</button></a>
-        </div>
-    @if(isset($data) || count($data))
+    @if(request()->get('search') !== null)
+        <h1>Результаты поиска по "{{request()->get('search')}}"</h1>
+        <form method="get" action="{{route('records-data')}}">
+            <div class = "form-group">
+                <button type="submit" class="btn btn-primary btn-success">Полный список</button>
+            </div>
+        </form>
+    @else
+        <h1>Список паролей:</h1>
+        <form method="get" action="{{route('add')}}">
+            <div class = "form-group">
+                <button type="submit" class="btn btn-primary btn-success">Добавить</button>
+            </div>
+        </form>
+    @endif
+    @if(count($data))
         @foreach ( $data as $el )
+        <form method="get" action="{{ route('record-show', $el->id) }}">
             <div class="alert alert-info">
                 <h2>{{$el->source}}</h2>
                 @if(isset($el->comment))
@@ -45,9 +54,11 @@
                 @if (isset($el->url))
                     <p>URL: {{$el->url}}</p>
                 @endif
-                <a href="{{ route('record-show', $el->id)}}"><button class="btn btn-success">Открыть</button></a>
+                <button type="submit" class="btn btn-success">Показать</button>
             </div>
+        </form>
         @endforeach
+        {{ $data->appends(['search' => request()->search])->links() }}
     @else
         <h1>У вас нет сохранённых паролей.</h1>
     @endif

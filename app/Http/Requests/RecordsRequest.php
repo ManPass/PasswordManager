@@ -26,6 +26,7 @@ class RecordsRequest extends FormRequest
             'url' => 'nullable|max:255|url',
             'comment' => 'nullable|max:255',
             'tag' => 'nullable|regex:([\D]+(,[\D]+)*)|max:100'
+            
         ];
     }
 

@@ -56,16 +56,20 @@ Route::group(['middleware' => ['auth']],function () {
     Route::get('/default',function(){
         return view('welcome');
     });
-    Route::get('contact/myInfo','ContactController@myInfo')->name('contact-data');
+    //Route::get('contact/myInfo','ContactController@myInfo')->name('contact-data');
+
     Route::post('records/submit','RecordsController@addRecord')->name('records-form');
-    Route::get('records/','RecordsController@showAllRecords')->name('records-data');
 
-    Route::get('records/search', 'RecordsController@searchRecord')->name('record-search');
+    Route::get('/records','RecordsController@showAllRecords')->name('records-data');
 
+    Route::get('/records/search', 'RecordsController@searchRecord')->name('search');
+    
     Route::get('records/show/{id}','RecordsController@showRecord')->name('record-show'); //просмотр
 
     Route::post('records/edit/{id}/update','RecordsController@updateSubmit')->name('record-update'); 
+
     Route::get('records/edit/{id}','RecordsController@editRecord')->name('record-edit'); //для изменения запИси
+
     Route::get('records/delete/{id}','RecordsController@deleteRecord')->name('record-delete');//для удаления
     //logout
     Route::get('/','AuthController@logout')->name('logout');

@@ -24,10 +24,10 @@ class ContactController extends Controller
 
         $user->save();
 
-        return redirect()->route('home');
+        //return redirect()->route('home');
     }
     public function myInfo(){
         //return view("myInfo",["data" => Users::all(), "role" => Role::all()]);
-        return view("myInfo",["data" => users::all()]);
+        //return view("myInfo",["data" => users::all()]);
     }
 }
