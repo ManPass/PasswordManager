@@ -19,12 +19,16 @@ class SecureAuth
     {
         $session = $request->cookie('login') != null && $request->cookie('valid') != null;
         if($session){
+            
+            //$request->merge(['login'=> $request->cookie('login')]);
+            //$request->request->add(['login' => $request->cookie('login')]);
+            $request->request->add(['login'=> $request->cookie('login')]);
             return $next($request);
+           
         }
         else{
             return redirect()->route('login');
         }
-        //abort(404);//аборты это выбор женщины, это не убийство!
     }
     
 }

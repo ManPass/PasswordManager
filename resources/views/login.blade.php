@@ -14,8 +14,8 @@
     @endif
     @csrf
     <div class="form-group" >
-        <label for="login">Name</label>
-        <input type="text" name="login" placeholder="input login" id="login" class="form-control">
+        <label for="email">Email</label>
+        <input type="text" name="login" placeholder="input email" id="login" class="form-control">
     </div>
     <div class="form-group">
         <label for="password">Password</label>
