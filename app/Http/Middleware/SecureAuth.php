@@ -17,6 +17,7 @@ class SecureAuth
     
     public function handle(Request $request, Closure $next)
     {
+        //можно сделать полноценную проверку из базы с поиском совпадений, а не просто присутствие куков
         $session = $request->cookie('login') != null && $request->cookie('valid') != null;
         if($session){
             

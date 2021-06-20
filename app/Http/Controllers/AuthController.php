@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
+use App\Models\UserRole;
+use App\Models\Role;
 //use App\Http\Requests\RegistraionRequest;
 use App\Models\users;
 class AuthController extends Controller
@@ -53,7 +55,14 @@ class AuthController extends Controller
         $user = new Users();
         $user->login = $request->input('login');
         $user->password = Hash::make($request->input('password'));
+
         $user->save();
+
+        $user_role = new UserRole();
+        $user_role->user_id = $user->id;
+        $user_role->role_id = Role::where('role','Default')->first()['id'];
+        
+        $user_role->save();
         //после регистрации перенаправляет на login
         return redirect()->route('login');
         
