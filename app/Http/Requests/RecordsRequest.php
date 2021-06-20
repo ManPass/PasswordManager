@@ -21,7 +21,7 @@ class RecordsRequest extends FormRequest
     {
         return [
             'source' => 'required|min:2|max:50',
-            'pass' => 'required|min:3|max:30|regex:(/[а-яА-ЯёЁ]/g)',
+            'pass' => 'required|min:3|max:30|regex:(^[^а-яА-ЯёЁ]+$)',
             'login' => 'max:50',
             'url' => 'nullable|max:255|url',
             'comment' => 'nullable|max:255',
@@ -50,7 +50,7 @@ class RecordsRequest extends FormRequest
             'pass.required' => 'Поле \"Пароль\" является обязательным',
             'pass.min' => 'Пароль не может быть меньше 3 символов',
             'pass.max' => 'Пароль не может быть больше 30 символов',
-            'pass.regex' => 'Пароль не может иметь кириллицу',
+            'pass.regex' => 'Пароль не должен иметь кириллицу',
             'login.max' => 'Логин не может быть больше 50 символов',
             'url.max' => 'URL не может быть больше 255 символов',
             'url.url' => 'Неверный формат URL',
