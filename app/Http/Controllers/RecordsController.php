@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\RecordsRequest;
 use App\Models\Records;
+use App\Models\RoleRecord;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\Encryption\DecryptException;
 
@@ -13,6 +14,7 @@ class RecordsController extends Controller
     public function addRecord(RecordsRequest $request)
     {
         $record = new Records();
+        $roleRecord = new RoleRecord();
         $record->source = $request->input('source');
         $record->password = encrypt($request->input('pass'));
         $record->login = $request->input('login_rec');
