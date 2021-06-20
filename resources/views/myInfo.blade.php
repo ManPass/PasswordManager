@@ -25,13 +25,22 @@
 @endsection
    
 @section('content')
-<h1>Список паролей:</h1>
-    @if(isset($data) || !count($data))
+    @if(request()->get('search') !== null)
+        <h1>Результаты поиска по "{{request()->get('search')}}"</h1>
+        <form method="get" action="{{route('records-data')}}">
+            <div class = "form-group">
+                <button type="submit" class="btn btn-primary btn-success">Полный список</button>
+            </div>
+        </form>
+    @else
+        <h1>Список паролей:</h1>
         <form method="get" action="{{route('add')}}">
             <div class = "form-group">
                 <button type="submit" class="btn btn-primary btn-success">Добавить</button>
             </div>
         </form>
+    @endif
+    @if(count($data))
         @foreach ( $data as $el )
         <form method="get" action="{{ route('record-show', $el->id) }}">
             <div class="alert alert-info">

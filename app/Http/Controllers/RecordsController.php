@@ -33,6 +33,10 @@ class RecordsController extends Controller
 
     public function searchRecord(Request $req)
     {
+        if($req->choose === null)
+        {
+            return view('myInfo', ['data' => []]);
+        }
         $searchRecords = Records::where($req->choose, 'LIKE', "%{$req->search}%")->orderby('source')->paginate(10);
         return view('myInfo', ['data' => $searchRecords]);
     }
