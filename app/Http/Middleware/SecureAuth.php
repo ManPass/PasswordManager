@@ -21,7 +21,10 @@ class SecureAuth
         if($session){
             return $next($request);
         }
-        abort(404);//аборты это выбор женщины, это не убийство!
+        else{
+            return redirect()->route('login');
+        }
+        //abort(404);//аборты это выбор женщины, это не убийство!
     }
     
 }

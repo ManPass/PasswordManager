@@ -2,7 +2,9 @@
 
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Cookie;
+use Illuminate\Support\Facades\Crypt;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -42,6 +44,8 @@ Route::group(['middleware' => ['auth']],function () {
         return view('add');
     })->name('add');
     Route::get('/home', function () {
+        
+        //return view('home',["login" => 'YourLogin']);// вернуть коки
         return view('home');
     })->name('home');
     
