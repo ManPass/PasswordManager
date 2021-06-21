@@ -4,7 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Hash;
+use App\Models\users;
 class SecureAuth
 {
     /**
@@ -18,16 +19,19 @@ class SecureAuth
     public function handle(Request $request, Closure $next)
     {
         //можно сделать полноценную проверку из базы с поиском совпадений, а не просто присутствие куков
-        $session = $request->cookie('login') != null && $request->cookie('valid') != null;
-        if($session){
+        //находим юзера по айди из куков
+        //dd($user);
+        
+        if ($request->cookie('tk') != null && $request->cookie('l') != null && $request->cookie('u') != null){//если куки найдены
+            $user = users::find($request->cookie('u'));//ищем юзера по кукам
+            $session = Hash::check($request->cookie('tk'),$user->remember_token);//сравниваем хэш токена в куках и в базе для аутендификации
+            if($session){          //если все норм то даем доступ дальше
+                $request->request->add(['login'=> $request->cookie('l')]);
+                return $next($request);
             
-            //$request->merge(['login'=> $request->cookie('login')]);
-            //$request->request->add(['login' => $request->cookie('login')]);
-            $request->request->add(['login'=> $request->cookie('login')]);
-            return $next($request);
-           
+            }
         }
-        else{
+        else{//если куки были подменены или удалены то отправляем на перелогин
             return redirect()->route('login');
         }
     }

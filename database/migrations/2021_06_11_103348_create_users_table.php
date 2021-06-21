@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
             $table->increments("id");
             //$table->binary("URLID");
             //$table->binary("RoleID");
-            
+            $table->remember_token->unique()->nullable()->default(null);
             $table->string("login");
             $table->string("password");
             $table->timestamps();

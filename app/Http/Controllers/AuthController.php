@@ -9,11 +9,29 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 use App\Models\UserRole;
 use App\Models\Role;
+use Illuminate\Support\Str;
 //use App\Http\Requests\RegistraionRequest;
 use App\Models\users;
 class AuthController extends Controller
 {
     public function login(Request $request){
+        
+        $user_2 = users::where('login',$request->input('login'))->first();
+        if ($user_2 != null && Hash::check($request->input('password'),$user_2->password)){
+            $token = Str::random(60);
+            $user_2->remember_token = Hash::make($token);//копия хэшированного токена для бд
+            $user_2->save();
+            $cookie = cookie('tk',$token,60);//копия токена для юзера
+            $cookie_log = cookie('l',$user_2->login,60);
+            $cookie_user_id = cookie('u',$user_2->id,60);
+            
+            return redirect()->route('home')->withCookie($cookie)->withCookie($cookie_log)->withCookie($cookie_user_id);
+        }
+        else {
+            return redirect()->route('login')->with("message","wrong email or password");//если юзера нет то бекаем его
+        }
+        
+        /*
         $user = null;
         foreach(users::all() as $user_el){//поиск юзера
             if ($request->input('login') === $user_el->login && 
@@ -28,6 +46,7 @@ class AuthController extends Controller
         else {
             return redirect()->route('login')->with("message","wrong email or password");//если юзера нет то бекаем его
         }
+        */
         
         //$loginCookie = $request->cookie('login'); //получение коков
         
@@ -40,7 +59,7 @@ class AuthController extends Controller
         *убрать из стандартного шаблона Registraion и Login, и добавить Logout
         *убрать из шаблона аутендификации все кроме Registraion и Login
         */
-        return redirect()->route('home')->withCookie($coockie)->withCookie($coockieValid);
+        
         //return response('login has been success')->withCookie($coockie)->withCookie($coockieValid);
     }
 
@@ -69,7 +88,7 @@ class AuthController extends Controller
     }
     public function logout(Request $request){
         //dd($request);
-        return redirect()->route('login')->withCookie(Cookie::forget('login'))->
-        withCookie(Cookie::forget('valid'));
+        return redirect()->route('login')->withCookie(Cookie::forget('l'))->
+        withCookie(Cookie::forget('tk'))->withCookie(Cookie::forget('u'));
     }
 }
