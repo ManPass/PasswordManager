@@ -18,7 +18,7 @@
                     <div class="alert alert-info search-element" >
                         <p class="fw-bold fs-2">{{$user->login}}</p>
                         <div class="inner-search-element">
-                            <p>Role: @foreach($roles[$user->login] as $role) {{$role}} @endforeach</p>
+                            <p>Role: @foreach($UserRoles[$user->login] as $UserRole) {{$UserRole}} @endforeach</p>
                         </div>
                         <div class="btn-group">
                             <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -26,8 +26,9 @@
                                 <span class="sr-only">Toggle Dropdown</span>
                             </button>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Role1</a>
-                                <a class="dropdown-item" href="#">Role2</a>
+                                @foreach($roles as $role )
+                                    <a class="dropdown-item" href="#">{{$role['role']}}</a>
+                                @endforeach
                             </div>
                         </div>
                         <div class="btn-group">
@@ -36,8 +37,9 @@
                                 <span class="sr-only">Toggle Dropdown</span>
                             </button>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="#">Role3</a>
-                                <a class="dropdown-item" href="#">Role4</a>
+                                @foreach($roles as $role )
+                                    <a class="dropdown-item" href="#">{{$role['role']}}</a>
+                                @endforeach
                             </div>
                         </div>
 

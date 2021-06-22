@@ -10,7 +10,8 @@ class adminController extends Controller
 {
     public function showAllUsers(Request $request){
         $allUsers = users::all();
-        $roles = [];
+
+        $UserRoles = [];
         $count = 0;
         foreach($allUsers as $user){
             $rolesArr = UserRole::all()->where('user_id',$user->id);
@@ -19,10 +20,10 @@ class adminController extends Controller
                 //dd($role['role_id']);
                 $rolesEl[] = Role::find($role['role_id'])['role'];
             }
-            $roles[$user->login] = $rolesEl;
+            $UserRoles[$user->login] = $rolesEl;
             $count++;
         }
-
-        return view('admin/admin_page',['data'=> $allUsers, 'roles' => $roles]);
+        $roles = Role::all();
+        return view('admin/admin_page',['data'=> $allUsers, 'UserRoles' => $UserRoles, 'roles' => $roles]);
     }
 }
