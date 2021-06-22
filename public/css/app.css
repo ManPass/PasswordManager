@@ -10,6 +10,18 @@ footer{
 }
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
+.search-element{
+    padding-top: 10px;
+    border:solid 1px dimgray;
+}
+.inner-search-element{
+    padding-top: 1px;
+    padding-bottom: 1px;
+}
+.search-container{
+    padding-top: 10px;
+    align-items: center;
+}
 .login-page {
   width: 360px;
   padding: 0 0 5%;
@@ -51,8 +63,8 @@ footer{
   padding: 15px;
   color: #FFFFFF;
   font-size: 14px;
-  -webkit-transition: all 0.3 ease;
-  transition: all 0.3 ease;
+  -webkit-transition: all .3s ease;
+  transition: all .3s ease;
   cursor: pointer;
 }
 .form button:hover,.form button:active,.form button:focus {
@@ -111,5 +123,5 @@ body {
   background: linear-gradient(to left, #fefefe, #fefefe);
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;      
+  -moz-osx-font-smoothing: grayscale;
 }

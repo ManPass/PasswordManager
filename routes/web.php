@@ -40,19 +40,23 @@ Route::post('/login','AuthController@registration')->name('registraion-submith')
 *помещяйте все роуты для которых необходима авторизация
 */
 Route::group(['middleware' => ['auth']],function () {
+    Route::get('/panel',function (){
+       return view('admin/admin_page');
+    })->name('admin_page');
+
     Route::get('/records/add', function(){
         return view('add');
     })->name('add');
     Route::get('/home', function () {
-        
+
         //return view('home',["login" => 'YourLogin']);// вернуть коки
         return view('home');
     })->name('home');
-    
+
     Route::get('/about',function(){
         return view('about');
     })->name('about');
-    
+
     Route::get('/default',function(){
         return view('welcome');
     });
@@ -63,10 +67,10 @@ Route::group(['middleware' => ['auth']],function () {
     Route::get('/records','RecordsController@showAllRecords')->name('records-data');
 
     Route::get('/records/search', 'RecordsController@searchRecord')->name('search');
-    
+
     Route::get('records/show/{id}','RecordsController@showRecord')->name('record-show'); //просмотр
 
-    Route::post('records/edit/{id}/update','RecordsController@updateSubmit')->name('record-update'); 
+    Route::post('records/edit/{id}/update','RecordsController@updateSubmit')->name('record-update');
 
     Route::get('records/edit/{id}','RecordsController@editRecord')->name('record-edit'); //для изменения запИси
 

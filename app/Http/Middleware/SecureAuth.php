@@ -15,25 +15,24 @@ class SecureAuth
      * @param  \Closure  $next
      * @return mixed
      */
-    
+
     public function handle(Request $request, Closure $next)
     {
         //можно сделать полноценную проверку из базы с поиском совпадений, а не просто присутствие куков
         //находим юзера по айди из куков
         //dd($user);
-        
-        if ($request->cookie('tk') != null && $request->cookie('l') != null && $request->cookie('u') != null){//если куки найдены
+
+        if ($request->hasCookie('tk') != false && $request->hasCookie('l') != false && $request->hasCookie('u') != false){//если куки найдены
             $user = users::find($request->cookie('u'));//ищем юзера по кукам
             $session = Hash::check($request->cookie('tk'),$user->remember_token);//сравниваем хэш токена в куках и в базе для аутендификации
             if($session){          //если все норм то даем доступ дальше
                 $request->request->add(['login'=> $request->cookie('l')]);
                 return $next($request);
-            
             }
         }
-        else{//если куки были подменены или удалены то отправляем на перелогин
+        //если куки были подменены или удалены то отправляем на перелогин
             return redirect()->route('login');
-        }
+
     }
-    
+
 }
