@@ -11,59 +11,40 @@
         <div class="col-md-7">
 
             <div class="container-fluid search-container ">
+
                 <p class="fw-bold fs-1">Users</p>
-                <div class="alert alert-info search-element" >
-                    <p class="fw-bold fs-2">login: some@mail.com</p>
-                    <div class="inner-search-element">
-                        <p>Role: admin, employee</p>
-                    </div>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Add Role
-                            <span class="sr-only">Toggle Dropdown</span>
-                        </button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Role1</a>
-                            <a class="dropdown-item" href="#">Role2</a>
+                @if($data)
+                    @foreach($data as $user)
+                    <div class="alert alert-info search-element" >
+                        <p class="fw-bold fs-2">{{$user->login}}</p>
+                        <div class="inner-search-element">
+                            <p>Role: @foreach($roles[$user->login] as $role) {{$role}} @endforeach</p>
                         </div>
-                    </div>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Delete Role
-                            <span class="sr-only">Toggle Dropdown</span>
-                        </button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Role3</a>
-                            <a class="dropdown-item" href="#">Role4</a>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Add Role
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">Role1</a>
+                                <a class="dropdown-item" href="#">Role2</a>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="alert alert-info search-element" >
-                    <p class="fw-bold fs-2">login: Lapsha@mail.com</p>
-                    <div class="inner-search-element">
-                        <p>Role: admin, employee</p>
-                    </div>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Add Role
-                            <span class="sr-only">Toggle Dropdown</span>
-                        </button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Role1</a>
-                            <a class="dropdown-item" href="#">Role2</a>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Delete Role
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">Role3</a>
+                                <a class="dropdown-item" href="#">Role4</a>
+                            </div>
                         </div>
+
                     </div>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Delete Role
-                            <span class="sr-only">Toggle Dropdown</span>
-                        </button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">Role3</a>
-                            <a class="dropdown-item" href="#">Role4</a>
-                        </div>
-                    </div>
-                </div>
+                    @endforeach
+                @endif
+
             </div>
 
 

@@ -40,9 +40,7 @@ Route::post('/login','AuthController@registration')->name('registraion-submith')
 *помещяйте все роуты для которых необходима авторизация
 */
 Route::group(['middleware' => ['auth']],function () {
-    Route::get('/panel',function (){
-       return view('admin/admin_page');
-    })->name('admin_page');
+    Route::get('/panel','adminController@showAllUsers')->name('admin_page');
 
     Route::get('/records/add', function(){
         return view('add');
