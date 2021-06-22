@@ -46,8 +46,6 @@ Route::group(['middleware' => ['auth']],function () {
         return view('add');
     })->name('add');
     Route::get('/home', function () {
-
-        //return view('home',["login" => 'YourLogin']);// вернуть коки
         return view('home');
     })->name('home');
 
