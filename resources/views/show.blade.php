@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title-block')
-    
+
 @endsection
 
 @section('content')
@@ -12,7 +12,7 @@
             @if(isset($data->comment))
                 <h4>Комментарий: {{$data->comment}}</h4>
             @else
-                <h4>Вы не оставляли комментариев<h4>
+                <h4>Вы не оставляли комментариев</h4>
             @endif
             @if(isset($data->login))
                 <h4>Логин: {{$data->login}}</h4>
@@ -27,6 +27,6 @@
             @endif
             <a href="{{ route('records-data')}}"><button class="btn btn-success">Вернуться</button></a>
             <a href="{{ route('record-edit', $data->id)}}"><button class="btn btn-success">Редактировать</button></a>
-            <a href="{{ route('record-delete', $data->id)}}"><button class="btn btn-danger">Удалить</button></a>        
+            <a href="{{ route('record-delete', $data->id)}}"><button class="btn btn-danger">Удалить</button></a>
         </div>
 @endsection

@@ -5,7 +5,24 @@
 @endsection
 
 @section('aside')
-<form method="get" action="{{ route('search') }}">
+    <form method="get" action="{{route('change-role')}}">
+        <div class="form-group">
+            <label for="role_choose">Сменить роль</label>
+            <select class="form-control" name="role_choose" id="role_choose" value="{{request()->cookie('p')}}">
+                @foreach($roles as $role)
+                    <option value={{$role["id"]}}
+                    @if($role["id"] == old('role_choose', request()->cookie('p')))
+                        selected="selected"
+                        @endif
+                    >{{$role["role"]}}</option>
+                @endforeach
+            </select>
+        </div>
+        <div class = "form-group">
+            <button type="submit" class="btn btn-primary btn-success">Изменить</button>
+        </div>
+    </form>
+<form method="get" action="{{ route('search') }}>
         <div class="form-group">
             <label for="search">Поиск </label>
             <input type="text" name="search" placeholder="Поиск..." id="search" class="form-control">
@@ -23,7 +40,7 @@
         </div>
 </form>
 @endsection
-   
+
 @section('content')
     @if(request()->get('search') !== null)
         <h1>Результаты поиска по "{{request()->get('search')}}"</h1>
@@ -40,8 +57,7 @@
             </div>
         </form>
     @endif
-    @if(count($data))
-        @foreach ( $data as $el )
+        @forelse ( $data as $el )
         <form method="get" action="{{ route('record-show', $el->id) }}">
             <div class="alert alert-info">
                 <h2>{{$el->source}}</h2>
@@ -57,9 +73,8 @@
                 <button type="submit" class="btn btn-success">Показать</button>
             </div>
         </form>
-        @endforeach
-        {{ $data->appends(['search' => request()->search])->links() }}
-    @else
-        <h1>У вас нет сохранённых паролей.</h1>
-    @endif
+        @empty
+            <h1>У вас нет сохранённых паролей.</h1>
+        @endforelse
+    @if(count($data)) {{  $data->appends(['search' => request()->search])->links() }} @endif
 @endsection

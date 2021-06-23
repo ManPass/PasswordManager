@@ -2,9 +2,6 @@
 
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Cookie;
-use Illuminate\Support\Facades\Crypt;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -60,7 +57,9 @@ Route::group(['middleware' => ['auth']],function () {
 
     Route::post('records/submit','RecordsController@addRecord')->name('records-form');
 
-    Route::get('/records','RecordsController@showAllRecords')->name('records-data');
+    Route::get('records/changerole', 'RoleController@changeSelectedRole')->name('change-role');
+
+    Route::get('/records/','RecordsController@showAllRecords')->name('records-data');
 
     Route::get('/records/search', 'RecordsController@searchRecord')->name('search');
 
