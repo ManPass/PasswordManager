@@ -53,10 +53,6 @@ Route::group(['middleware' => ['auth']],function () {
         return view('home');
     })->name('home');
 
-    Route::get('/about',function(){
-        return view('about');
-    })->name('about');
-
     Route::get('/default',function(){
         return view('welcome');
     });
@@ -75,6 +71,18 @@ Route::group(['middleware' => ['auth']],function () {
     Route::get('records/edit/{id}','RecordsController@editRecord')->name('record-edit'); //для изменения запИси
 
     Route::get('records/delete/{id}','RecordsController@deleteRecord')->name('record-delete');//для удаления
+   
+    Route::get('/profile','ProfileController@viewProfile')->name('profile-data');
+
+    Route::get('/profile/{id}/change-mail','ProfileController@viewChange1')->name('change-mail');
+
+    Route::get('/profile/{id}/change-password','ProfileController@viewChange1')->name('change-password');
+
+    Route::post('/profile/{id}/submitM','ProfileController@changeMail')->name('change-mail-submit');
+
+    Route::post('/profile/{id}/submitP','ProfileController@changePassword')->name('change-password-submit');
+    
+
     //logout
     Route::get('/','AuthController@logout')->name('logout');
 });
