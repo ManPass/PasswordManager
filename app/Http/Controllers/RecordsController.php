@@ -87,6 +87,7 @@ class RecordsController extends Controller
         $role_id = $req->cookie('p');
 
         //Получение id UserRole текущего пользователя и его текущей роли
+
         $urId = UserRole::all()->where('user_id', $req->cookie('u'))
             ->where('role_id', $role_id)->first()->id;
 
@@ -95,11 +96,13 @@ class RecordsController extends Controller
         $records = [];
 
         //Получение всех записей текущей роли
+        $count = 0;
         foreach($roleRecords as $rr)
         {
-            $records = Records::where('id', $rr->records_id)->orderby('source')->paginate(10);
+            $records[$count] = Records::where('id', $rr->records_id)->orderBy('source')->paginate(10);
+            $count++;
         }
-
+        //dd($records);
         //Получение ролей для выпадающего списка
         $roles = $this->getRoles($req);
         return view("myInfo", ['data' => $records, 'roles' => $roles]);

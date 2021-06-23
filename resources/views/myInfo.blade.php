@@ -57,7 +57,8 @@
             </div>
         </form>
     @endif
-        @forelse ( $data as $el )
+        @forelse ( $data as $one)
+            @foreach($one as $el )
         <form method="get" action="{{ route('record-show', $el->id) }}">
             <div class="alert alert-info">
                 <h2>{{$el->source}}</h2>
@@ -73,8 +74,9 @@
                 <button type="submit" class="btn btn-success">Показать</button>
             </div>
         </form>
+            @endforeach
         @empty
             <h1>У вас нет сохранённых паролей.</h1>
         @endforelse
-    @if(count($data)) {{  $data->appends(['search' => request()->search])->links() }} @endif
+
 @endsection
