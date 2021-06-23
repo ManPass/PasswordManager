@@ -40,16 +40,14 @@ Route::post('/login','AuthController@registration')->name('registraion-submith')
 *помещяйте все роуты для которых необходима авторизация
 */
 Route::group(['middleware' => ['auth']],function () {
-    Route::get('/panel',function (){
-       return view('admin/admin_page');
-    })->name('admin_page');
-
+    //admin
+    Route::get('/panel','adminController@showAllUsers')->name('admin_page');
+    Route::get('/pane','adminController@addRole')->name('add_role');
+    //admin
     Route::get('/records/add', function(){
         return view('add');
     })->name('add');
     Route::get('/home', function () {
-
-        //return view('home',["login" => 'YourLogin']);// вернуть коки
         return view('home');
     })->name('home');
 
