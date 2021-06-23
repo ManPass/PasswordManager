@@ -22,7 +22,7 @@
             <button type="submit" class="btn btn-primary btn-success">Изменить</button>
         </div>
     </form>
-<form method="get" action="{{ route('search') }}>
+    <form method="get" action="{{ route('search') }}">
         <div class="form-group">
             <label for="search">Поиск </label>
             <input type="text" name="search" placeholder="Поиск..." id="search" class="form-control">
@@ -38,7 +38,7 @@
         <div class = "form-group">
             <button type="submit" class="btn btn-primary btn-success">Найти</button>
         </div>
-</form>
+    </form>
 @endsection
 
 @section('content')

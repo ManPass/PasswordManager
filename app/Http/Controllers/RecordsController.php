@@ -13,7 +13,11 @@ use Illuminate\Http\RedirectResponse;
 
 class RecordsController extends Controller
 {
-    public function addRecord(RecordsRequest $req)
+    //============public==========================================================
+    /*
+     * Добавление новой записи
+     */
+    public function addRecord(RecordsRequest $req): RedirectResponse
     {
         $roleId = $req->cookie('p');
         $userRoleId = UserRole::all()->where('user_id', $req->cookie('u'))
@@ -37,37 +41,41 @@ class RecordsController extends Controller
             ]
         );
 
-        /*$record = new Records();
-        $record->source = $request->input('source');
-        $record->password = encrypt($request->input('pass'));
-        $record->login = $request->input('login_rec');
-        $record->url = $request->input('url');
-        $record->comment = $request->input('comment');
-        $record->tag = $request->input('tag');
-*/
         $record->save();
         $roleRecord->save();
-
 
         return redirect()->route('records-data')->withCookie($roleId);
     }
 
+    //Показать конкретную запись
     public function showRecord($id)
     {
         return view('show', ['data' => Records::find($id)]);
     }
 
+    //Поиск записей
     public function searchRecord(Request $req)
     {
-        if($req->choose === null)
+        if($req->choose === null || $req->search == null)
         {
-            return view('myInfo', ['data' => []]);
+            return redirect()->route('records-data')->with("message", "Choose search");
         }
-        $searchRecords = Records::where($req->choose, 'LIKE', "%{$req->search}%")->orderby('source')->paginate(10);
-        return view('myInfo', ['data' => $searchRecords]);
+        $roleRecords = $this->getRoleRecords($req);
+        $searchRecords = [];
+        $count = 0;
+        foreach($roleRecords as $rr)
+        {
+            $searchRecords[$count] = Records::where('id', $rr->records_id)
+                ->where($req->choose, 'LIKE', "%$req->search%")
+                ->orderby('source')->paginate(10);
+            $count++;
+        }
+
+        return view('myInfo', ['data' => $searchRecords, 'roles' => $this->getRoles($req)]);
     }
 
-    public function updateSubmit($id, RecordsRequest $request)
+    //Редактирование записи
+    public function updateSubmit($id, RecordsRequest $request): RedirectResponse
     {
         $record = Records::find($id);
         $record->source = $request->input('source');
@@ -82,48 +90,34 @@ class RecordsController extends Controller
         return redirect()->route('records-data');
     }
 
+    //Показ всех записей
     public function showAllRecords(Request $req)
     {
-        $role_id = $req->cookie('p');
-
-        //Получение id UserRole текущего пользователя и его текущей роли
-
-        $urId = UserRole::all()->where('user_id', $req->cookie('u'))
-            ->where('role_id', $role_id)->first()->id;
-
-        //Получение всех RoleRecord по id UserRole
-        $roleRecords = RoleRecord::all()->where('user_role_id', $urId);
-        $records = [];
-
-        //Получение всех записей текущей роли
-        $count = 0;
-        foreach($roleRecords as $rr)
-        {
-            $records[$count] = Records::where('id', $rr->records_id)->orderBy('source')->paginate(10);
-            $count++;
-        }
-        //dd($records);
-        //Получение ролей для выпадающего списка
-        $roles = $this->getRoles($req);
-        return view("myInfo", ['data' => $records, 'roles' => $roles]);
+        return view("myInfo", ['data' => $this->getRecords($req), 'roles' => $this->getRoles($req)]);
     }
 
+    //Переход на редактирование записи
     public function editRecord($id){
         return view('edit', ['data' => Records::find($id)]); //по айдишнику переходим на редактирование записи
     }
 
-    public function deleteRecord($id){
+    //Удаление записи
+    public function deleteRecord($id): RedirectResponse
+    {
         Records::find($id)->delete();
         return redirect()->route('records-data');
     }
 
+    //===========================private=============================
+
+    //Получить userrole текущего пользователя текущей роли
     private function getUserRoles(Request $req)
     {
         return users::find($req->cookie('u'))->userRoles;
     }
 
     //Получение ролей
-    private function getRoles(Request $req)
+    private function getRoles(Request $req): array
     {
         //Получаем все UserRole'ы
         $userRoles = $this->getUserRoles($req);
@@ -135,5 +129,35 @@ class RecordsController extends Controller
         }
 
         return $roles;
+    }
+
+    //Получить RoleRecords
+    private function getRoleRecords(Request $req)
+    {
+        $role_id = $req->cookie('p');
+
+        //Получение id UserRole текущего пользователя и его текущей роли
+
+        $urId = UserRole::all()->where('user_id', $req->cookie('u'))
+            ->where('role_id', $role_id)->first()->id;
+
+        return RoleRecord::all()->where('user_role_id', $urId);
+    }
+
+    //Получить все записи
+    private function getRecords(Request $req): array
+    {
+        $roleRecords = $this->getRoleRecords($req);
+        $records = [];
+
+        //Получение всех записей текущей роли
+        $count = 0;
+        foreach($roleRecords as $rr)
+        {
+            $records[$count] = Records::where('id', $rr->records_id)->orderBy('source')->paginate(10);
+            $count++;
+        }
+
+        return $records;
     }
 }
