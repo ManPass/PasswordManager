@@ -26,4 +26,10 @@ class adminController extends Controller
         $roles = Role::all();
         return view('admin/admin_page',['data'=> $allUsers, 'UserRoles' => $UserRoles, 'roles' => $roles]);
     }
+    public function addRole(Request $request){
+        $role = new Role();
+        $role->role= $request->input('role');
+        $role->save();
+        return redirect()->route('admin_page',['answer' => 'ok']);
+    }
 }
