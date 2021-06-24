@@ -27,7 +27,7 @@
                             </button>
                             <div class="dropdown-menu">
                                 @foreach($roles as $role )
-                                    <a class="dropdown-item" href="#">{{$role['role']}}</a>
+                                    <a class="dropdown-item" href="{{route('add_role_to_user',['user'=>$user,'role_id'=>$role])}}">{{$role['role']}}</a>
                                 @endforeach
                             </div>
                         </div>
@@ -37,9 +37,9 @@
                                 <span class="sr-only">Toggle Dropdown</span>
                             </button>
                             <div class="dropdown-menu">
-                                @foreach($roles as $role )
-                                    <a class="dropdown-item" href="#">{{$role['role']}}</a>
-                                @endforeach
+                                @foreach($UserRoles[$user->login] as $UserRole)
+                                    <a class="dropdown-item" href="{{route('delete_role',['user'=>$user,'role'=>$UserRole])}}">{{$UserRole}}
+                                @endforeach</a>
                             </div>
                         </div>
 

@@ -43,6 +43,8 @@ Route::group(['middleware' => ['auth']],function () {
     //admin
     Route::get('/panel','adminController@showAllUsers')->name('admin_page');
     Route::get('/pane','adminController@addRole')->name('add_role');
+    Route::get('/panels','adminController@deleteRole')->name('delete_role');
+    Route::get('/pan','adminController@addRoleToUser')->name('add_role_to_user');
     //admin
     Route::get('/records/add', function(){
         return view('add');
