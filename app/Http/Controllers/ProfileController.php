@@ -59,7 +59,7 @@ class ProfileController extends Controller
         if (Hash::check($request->input('password1'),$user->password)){
             if ($request->input('password2')===$request->input('password3')){
                 $user = Users::find($id);
-                $user->password = $request->input('password2');
+                $user->password = Hash::make($request->input('password2'));
                 $user->save();
                 return redirect()->route('profile-data')->with("message","Пароль изменён");
             } else {
