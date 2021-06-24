@@ -33,6 +33,6 @@ class Records extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('records');
     }
 }

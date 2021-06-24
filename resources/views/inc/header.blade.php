@@ -8,8 +8,13 @@
         
         <a class="me-3 py-2 text-dark text-decoration-none" href="{{ route('records-data')}}">My Info</a>
         <a class="me-3 py-2 text-dark text-decoration-none" href="{{ route('add')}}">Add data</a>
+<<<<<<< HEAD
         
         <a class="me-3 py-2 text-dark text-decoration-none" href="{{ route('profile-data')}}">{{request()->get('login')}} </a>
+=======
+
+        <a class="me-3 py-2 text-dark text-decoration-none" href="#">{{request()->get('login')}} </a>
+>>>>>>> dev
 
         <a class="me-3 py-2 text-dark text-decoration-none" href="{{route('logout')}}">Logout</a>
       </nav>

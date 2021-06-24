@@ -24,7 +24,7 @@ class AuthController extends Controller
             $cookie = cookie('tk',$token,60);//копия токена для юзера
             $cookie_log = cookie('l',$user_2->login,60);
             $cookie_user_id = cookie('u',$user_2->id,60);
-            $cookie_role = cookie('p','default');
+            $cookie_role = cookie('p',1);
             return redirect()->route('home')->withCookie($cookie)->withCookie($cookie_log)
                 ->withCookie($cookie_user_id)->withCookie($cookie_role);
         }

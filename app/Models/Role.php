@@ -9,4 +9,9 @@ class Role extends Model
 {
     public $timestamps = false;
     use HasFactory;
+
+    function userRoles()
+    {
+        return $this->hasMany(UserRole::class, 'role_id');
+    }
 }

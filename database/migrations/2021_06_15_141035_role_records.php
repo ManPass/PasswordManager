@@ -31,6 +31,6 @@ class RoleRecords extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('role_records');
     }
 }
