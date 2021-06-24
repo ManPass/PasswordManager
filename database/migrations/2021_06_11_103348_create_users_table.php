@@ -13,6 +13,7 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
+<<<<<<< HEAD:database/migrations/2014_10_12_000000_create_users_table.php
         Schema::create('Loh', function (Blueprint $table) {
             $table->id();
             $table->string('name');
@@ -20,6 +21,15 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
+=======
+        Schema::create('users', function (Blueprint $table) {
+            $table->increments("id");
+            //$table->binary("URLID");
+            //$table->binary("RoleID");
+            $table->string("remember_token", 255)->unique()->nullable()->default(null);
+            $table->string("login");
+            $table->string("password");
+>>>>>>> 2411b5a80bfc78945cac7a278ad47e464906294b:database/migrations/2021_06_11_103348_create_users_table.php
             $table->timestamps();
         });
     }
@@ -31,6 +41,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('Users');
     }
 }
