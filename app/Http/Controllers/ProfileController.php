@@ -57,9 +57,9 @@ class ProfileController extends Controller
     public function changePassword($id, PasswordChangeRequest $request){
         $user = Users::find($id);
         if (Hash::check($request->input('password1'),$user->password)){
-            if (Hash::check($request->input('password2'),$request->input('password3'))){
+            if ($request->input('password2') === $request->input('password3')){
                 $user = Users::find($id);
-                $user->password = $request->input('password2');
+                $user->password = Hash::make($request->input('password2'));;
                 $user->save();
                 return redirect()->route('profile-data')->with("message","Пароль изменён");
             } else {
@@ -67,7 +67,7 @@ class ProfileController extends Controller
             }
         }
         else {
-            return redirect()->route('change-mail', $id)->with("message","Неверный пароль");
+            return redirect()->route('profile-data', $id)->with("message","Неверный пароль");
         }
       
     }
