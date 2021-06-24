@@ -56,6 +56,8 @@ Route::group(['middleware' => ['auth']],function () {
     Route::get('/default',function(){
         return view('welcome');
     });
+
+    
     //Route::get('contact/myInfo','ContactController@myInfo')->name('contact-data');
 
     Route::post('records/submit','RecordsController@addRecord')->name('records-form');
@@ -74,14 +76,16 @@ Route::group(['middleware' => ['auth']],function () {
    
     Route::get('/profile','ProfileController@viewProfile')->name('profile-data');
 
-    Route::get('/profile/{id}/change-mail','ProfileController@viewChange1')->name('change-mail');
+    Route::get('/profile/{id}/changemail','ProfileController@viewChange1')->name('change-mail');
 
-    Route::get('/profile/{id}/change-password','ProfileController@viewChange1')->name('change-password');
+    Route::get('/profile/{id}/changepassword','ProfileController@viewChange2')->name('change-password');
 
     Route::post('/profile/{id}/submitM','ProfileController@changeMail')->name('change-mail-submit');
 
     Route::post('/profile/{id}/submitP','ProfileController@changePassword')->name('change-password-submit');
     
+
+
 
     //logout
     Route::get('/','AuthController@logout')->name('logout');

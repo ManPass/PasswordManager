@@ -10,7 +10,7 @@
         <a class="me-3 py-2 text-dark text-decoration-none" href="{{ route('add')}}">Add data</a>
         
         <a class="me-3 py-2 text-dark text-decoration-none" href="{{ route('profile-data')}}">{{request()->get('login')}} </a>
-       
+
         <a class="me-3 py-2 text-dark text-decoration-none" href="{{route('logout')}}">Logout</a>
       </nav>
     </div>

@@ -6,7 +6,7 @@
 
 @section('content')
  
-    <div class="alert alert-info">
+<div class="alert alert-info">
         <h3>Текущий профиль
         <h3>{{$data->login}} 
         <a href="{{route('change-mail',$data->id)}}"><button class="btn btn-success">Изменить адрес эл. почты</button></a>
@@ -14,7 +14,6 @@
         <h4>активен с {{$data->created_at}}
         
     </div>
-        
 
 @endsection
-    
+  
