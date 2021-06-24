@@ -136,18 +136,32 @@ class RecordsController extends Controller
     {
         $role_id = $req->cookie('p');
 
+        $userRole = UserRole::all()->where('user_id', $req->cookie('u'))
+            ->where('role_id', $role_id)->first();
+
         //Получение id UserRole текущего пользователя и его текущей роли
 
-        $urId = UserRole::all()->where('user_id', $req->cookie('u'))
+        if(isset($userRole))
+        {
+            $urId = UserRole::all()->where('user_id', $req->cookie('u'))
             ->where('role_id', $role_id)->first()->id;
 
-        return RoleRecord::all()->where('user_role_id', $urId);
+            return RoleRecord::all()->where('user_role_id', $urId);
+        }
+
+        return null;
     }
 
     //Получить все записи
     private function getRecords(Request $req): array
     {
         $roleRecords = $this->getRoleRecords($req);
+
+        if(!isset($roleRecords))
+        {
+            return [];
+        }
+
         $records = [];
 
         //Получение всех записей текущей роли
