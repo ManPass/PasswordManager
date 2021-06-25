@@ -19,7 +19,7 @@ class Records extends Migration
                 $table->string("source");
                 $table->string("password", 255);
                 $table->string("login")->nullable();
-                $table->string("url")->nullable();
+                $table->string("url", 255)->nullable();
                 $table->text("comment")->nullable();
                 $table->string("tag")->nullable();
             });

@@ -47,11 +47,11 @@ class AuthController extends Controller
 
         $user->save();
 
-        $user_role = new UserRole();
-        $user_role->user_id = $user->id;
-        $user_role->role_id = Role::where('role','Default')->first()['id'];
+        //$user_role = new UserRole();
+        //$user_role->user_id = $user->id;
+        //$user_role->role_id = Role::where('role','Default')->first()['id'];
 
-        $user_role->save();
+        //$user_role->save();
         //после регистрации перенаправляет на login
         return redirect()->route('login');
 

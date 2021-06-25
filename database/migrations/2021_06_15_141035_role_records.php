@@ -18,7 +18,7 @@ class RoleRecords extends Migration
             $table->integer("user_role_id")->unsigned();
             $table->integer("records_id")->unsigned();
             
-            $table->foreign("user_role_id")->references("id")->on("user_role")->onUpdate("cascade")->onDelete("cascade");
+            $table->foreign("user_role_id")->references("id")->on("user_roles")->onUpdate("cascade")->onDelete("cascade");
             $table->foreign("records_id")->references("id")->on("records")->onUpdate("cascade")->onDelete("cascade");
 
         });
