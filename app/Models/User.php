@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use RoleRecords;
 
-class users extends Authenticatable
+class User extends Authenticatable
 {
     use HasFactory,Notifiable;
 

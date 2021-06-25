@@ -2,10 +2,10 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use App\Models\users;
 class SecureAuth
 {
     /**
@@ -25,7 +25,7 @@ class SecureAuth
         if ($request->hasCookie('tk') != false && $request->hasCookie('l') != false &&
             $request->hasCookie('u') != false){//если куки найдены
 
-            $user = users::find($request->cookie('u'));//ищем юзера по кукам
+            $user = User::find($request->cookie('u'));//ищем юзера по кукам
 
             $session = Hash::check($request->cookie('tk'),$user->remember_token);//сравниваем хэш токена в куках и в базе для аутендификации
             if($session){          //если все норм то даем доступ дальше
