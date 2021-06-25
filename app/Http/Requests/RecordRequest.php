@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RecordsRequest extends FormRequest
+class RecordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -16,7 +16,7 @@ class RecordsRequest extends FormRequest
         return true;
     }
 
-    
+
     public function rules()
     {
         return [
@@ -26,7 +26,7 @@ class RecordsRequest extends FormRequest
             'url' => 'nullable|max:255|url',
             'comment' => 'nullable|max:255',
             'tag' => 'nullable|regex:([\D]+(,[\D]+)*)|max:100'
-            
+
         ];
     }
 

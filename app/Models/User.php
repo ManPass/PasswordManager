@@ -10,10 +10,16 @@ use RoleRecords;
 
 class User extends Authenticatable
 {
+    
     use HasFactory,Notifiable;
 
-    function userRoles()
+    function roles()
     {
-        return $this->hasMany(UserRole::class, 'user_id');
+        return $this->belongsToMany('App\Models\Role', 'user_roles');
+    }
+
+    function records()
+    {
+        return $this->hasMany('App\Models\Record', ['App\Models\Role', 'role_records']);
     }
 }

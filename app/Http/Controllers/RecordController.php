@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Http\Requests\RecordsRequest;
+use App\Http\Requests\RecordRequest;
 use App\Models\Record;
 use App\Models\RoleRecord;
 use App\Models\Role;
 use App\Models\UserRole;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
 
 class RecordController extends Controller
 {
@@ -17,13 +18,13 @@ class RecordController extends Controller
     /*
      * Добавление новой записи
      */
-    public function addRecord(RecordsRequest $req): RedirectResponse
+    public function addRecord(RecordRequest $req): RedirectResponse
     {
         $roleId = $req->cookie('p');
         $userRoleId = UserRole::all()->where('user_id', $req->cookie('u'))
             ->where('role_id', $roleId)->first()->id;
         //dd($userRoleId);
-        $record = Records::create(
+        $record = Record::create(
             [
                 'source' => $req->source,
                 'password' => encrypt($req->pass),
@@ -44,13 +45,13 @@ class RecordController extends Controller
         $record->save();
         $roleRecord->save();
 
-        return redirect()->route('records-data')->withCookie($roleId);
+        return redirect()->route('records-data');
     }
 
     //Показать конкретную запись
     public function showRecord($id)
     {
-        return view('show', ['data' => Records::find($id)]);
+        return view('show', ['data' => Record::find($id)]);
     }
 
     //Поиск записей
@@ -65,7 +66,7 @@ class RecordController extends Controller
         $count = 0;
         foreach($roleRecords as $rr)
         {
-            $searchRecords[$count] = Records::where('id', $rr->records_id)
+            $searchRecords[$count] = Record::where('id', $rr->records_id)
                 ->where($req->choose, 'LIKE', "%$req->search%")
                 ->orderby('source')->paginate(10);
             $count++;
@@ -75,9 +76,9 @@ class RecordController extends Controller
     }
 
     //Редактирование записи
-    public function updateSubmit($id, RecordsRequest $request): RedirectResponse
+    public function updateSubmit($id, RecordRequest $request): RedirectResponse
     {
-        $record = Records::find($id);
+        $record = Record::find($id);
         $record->source = $request->input('source');
         $record->password = encrypt($request->input('pass'));
         $record->login = $request->input('login_rec');
@@ -98,43 +99,27 @@ class RecordController extends Controller
 
     //Переход на редактирование записи
     public function editRecord($id){
-        return view('edit', ['data' => Records::find($id)]); //по айдишнику переходим на редактирование записи
+        return view('edit', ['data' => Record::find($id)]); //по айдишнику переходим на редактирование записи
     }
 
     //Удаление записи
     public function deleteRecord($id): RedirectResponse
     {
-        Records::find($id)->delete();
+        Record::find($id)->delete();
         return redirect()->route('records-data');
     }
 
     //===========================private=============================
-
-    //Получить userrole текущего пользователя текущей роли
-    private function getUserRoles(Request $req)
+    private function getRoles(Request $req)
     {
-        return User::find($req->cookie('u'))->userRoles;
-    }
-
-    //Получение ролей
-    private function getRoles(Request $req): array
-    {
-        //Получаем все UserRole'ы
-        $userRoles = $this->getUserRoles($req);
-        $roles = [];
-        for($i = 0; $i < count($userRoles); $i++)
-        {
-            //Поиск всех ролей, привязанных к юзеру и преобразование в массив
-            $roles[$i] = Role::find($userRoles[$i]["role_id"])->toArray();
-        }
-
-        return $roles;
+        return User::find($req->cookie('u'))->roles->all('id', $req->cookie('p')) ?? [];
     }
 
     //Получить RoleRecords
     private function getRoleRecords(Request $req)
     {
         $role_id = $req->cookie('p');
+        $user = User::find($req->cookie('u'));
 
         $userRole = UserRole::all()->where('user_id', $req->cookie('u'))
             ->where('role_id', $role_id)->first();
@@ -149,7 +134,7 @@ class RecordController extends Controller
             return RoleRecord::all()->where('user_role_id', $urId);
         }
 
-        return null;
+        return [];
     }
 
     //Получить все записи

@@ -15,4 +15,10 @@ class Record extends Model
     {
         return $this->hasMany(RoleRecord::class, 'records_id');
     }
+
+
+    function roles()
+    {
+        return $this->belongsToMany('App\Models\Role', 'role_records', 'records_id', 'user_role_id');
+    }
 }
