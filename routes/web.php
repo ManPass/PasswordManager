@@ -55,21 +55,21 @@ Route::group(['middleware' => ['auth']],function () {
     });
     //Route::get('contact/myInfo','ContactController@myInfo')->name('contact-data');
 
-    Route::post('records/submit','RecordsController@addRecord')->name('records-form');
+    Route::post('records/submit','RecordController@addRecord')->name('records-form');
 
     Route::get('records/changerole', 'RoleController@changeSelectedRole')->name('change-role');
 
-    Route::get('/records/','RecordsController@showAllRecords')->name('records-data');
+    Route::get('/records/','RecordController@showAllRecords')->name('records-data');
 
-    Route::get('/records/search', 'RecordsController@searchRecord')->name('search');
+    Route::get('/records/search', 'RecordController@searchRecord')->name('search');
 
-    Route::get('records/show/{id}','RecordsController@showRecord')->name('record-show'); //просмотр
+    Route::get('records/show/{id}','RecordController@showRecord')->name('record-show'); //просмотр
 
-    Route::post('records/edit/{id}/update','RecordsController@updateSubmit')->name('record-update');
+    Route::post('records/edit/{id}/update','RecordController@updateSubmit')->name('record-update');
 
-    Route::get('records/edit/{id}','RecordsController@editRecord')->name('record-edit'); //для изменения запИси
+    Route::get('records/edit/{id}','RecordController@editRecord')->name('record-edit'); //для изменения запИси
 
-    Route::get('records/delete/{id}','RecordsController@deleteRecord')->name('record-delete');//для удаления
+    Route::get('records/delete/{id}','RecordController@deleteRecord')->name('record-delete');//для удаления
     //logout
     Route::get('/','AuthController@logout')->name('logout');
 });

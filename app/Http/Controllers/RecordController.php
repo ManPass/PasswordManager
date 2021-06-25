@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\RecordsRequest;
-use App\Models\Records;
+use App\Models\Record;
 use App\Models\RoleRecord;
 use App\Models\Role;
 use App\Models\UserRole;
 use App\Models\users;
 use Illuminate\Http\RedirectResponse;
 
-class RecordsController extends Controller
+class RecordController extends Controller
 {
     //============public==========================================================
     /*
@@ -168,7 +168,7 @@ class RecordsController extends Controller
         $count = 0;
         foreach($roleRecords as $rr)
         {
-            $records[$count] = Records::where('id', $rr->records_id)->orderBy('source')->paginate(10);
+            $records[$count] = Record::where('id', $rr->records_id)->orderBy('source')->paginate(10);
             $count++;
         }
 

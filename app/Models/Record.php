@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Records extends Model
+class Record extends Model
 {
     public $timestamps = false;
     protected $fillable = ['source', 'password', 'login', 'url', 'comment', 'tag'];
