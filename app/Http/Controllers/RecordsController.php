@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\RecordsRequest;
 use App\Models\Records;
 use App\Models\RoleRecord;
 use App\Models\Role;
 use App\Models\UserRole;
-use App\Models\users;
 use Illuminate\Http\RedirectResponse;
 
 class RecordsController extends Controller
@@ -113,7 +113,7 @@ class RecordsController extends Controller
     //Получить userrole текущего пользователя текущей роли
     private function getUserRoles(Request $req)
     {
-        return users::find($req->cookie('u'))->userRoles;
+        return User::find($req->cookie('u'))->userRoles;
     }
 
     //Получение ролей
