@@ -5,12 +5,13 @@
       </a>
       <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
         <a class="me-3 py-2 text-dark text-decoration-none" href="{{ route('home') }}">Home</a>
-        <a class="me-3 py-2 text-dark text-decoration-none" href="{{ route('about')}}">About</a>
+        
         <a class="me-3 py-2 text-dark text-decoration-none" href="{{ route('records-data')}}">My Info</a>
         <a class="me-3 py-2 text-dark text-decoration-none" href="{{ route('add')}}">Add data</a>
-
-        <a class="me-3 py-2 text-dark text-decoration-none" href="#">{{request()->get('login')}} </a>
+        
+        <a class="me-3 py-2 text-dark text-decoration-none" href="{{ route('profile-data')}}">{{request()->get('login')}} </a>
 
         <a class="me-3 py-2 text-dark text-decoration-none" href="{{route('logout')}}">Logout</a>
       </nav>
     </div>
+  

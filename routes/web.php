@@ -27,18 +27,17 @@ Route::get('/registration',function(){
 //registraion-submith
 Route::post('/login','AuthController@registration')->name('registraion-submith');
 
-
-
-//Route::post('contact/submith','ContactController@submith')->name('contact-form'); //чё за субмитх?//Паша=> это очень старый роут тестовый, можно удалить если не нид
-
-
 /*
 *Здесь покоятся роуты которые должны быть под защитой
 *помещяйте все роуты для которых необходима авторизация
 */
 Route::group(['middleware' => ['auth']],function () {
-    Route::get('/panel','adminController@showAllUsers')->name('admin_page');
-
+    //admin
+    Route::get('/panel','AdminController@showAllUsers')->name('admin_page');
+    Route::get('/pane','AdminController@addRole')->name('add_role');
+    Route::get('/panels','AdminController@deleteRoleToUser')->name('delete_role');
+    Route::get('/pan','AdminController@addRoleToUser')->name('add_role_to_user');
+    //admin
     Route::get('/records/add', function(){
         return view('add');
     })->name('add');
@@ -46,14 +45,9 @@ Route::group(['middleware' => ['auth']],function () {
         return view('home');
     })->name('home');
 
-    Route::get('/about',function(){
-        return view('about');
-    })->name('about');
-
     Route::get('/default',function(){
         return view('welcome');
     });
-    //Route::get('contact/myInfo','ContactController@myInfo')->name('contact-data');
 
     Route::post('records/submit','RecordController@addRecord')->name('records-form');
 
@@ -70,6 +64,17 @@ Route::group(['middleware' => ['auth']],function () {
     Route::get('records/edit/{id}','RecordController@editRecord')->name('record-edit'); //для изменения запИси
 
     Route::get('records/delete/{id}','RecordController@deleteRecord')->name('record-delete');//для удаления
+
+    Route::get('/profile','ProfileController@viewProfile')->name('profile-data');
+
+    Route::get('/profile/{id}/changemail','ProfileController@viewChange1')->name('change-mail');
+
+    Route::get('/profile/{id}/changepassword','ProfileController@viewChange2')->name('change-password');
+
+    Route::post('/profile/{id}/submitM','ProfileController@changeMail')->name('change-mail-submit');
+
+    Route::post('/profile/{id}/submitP','ProfileController@changePassword')->name('change-password-submit');
+
     //logout
     Route::get('/','AuthController@logout')->name('logout');
 });

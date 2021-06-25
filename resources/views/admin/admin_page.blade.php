@@ -27,7 +27,7 @@
                             </button>
                             <div class="dropdown-menu">
                                 @foreach($roles as $role )
-                                    <a class="dropdown-item" href="#">{{$role['role']}}</a>
+                                    <a class="dropdown-item" href="{{route('add_role_to_user',['user'=>$user,'role_id'=>$role])}}">{{$role['role']}}</a>
                                 @endforeach
                             </div>
                         </div>
@@ -37,9 +37,9 @@
                                 <span class="sr-only">Toggle Dropdown</span>
                             </button>
                             <div class="dropdown-menu">
-                                @foreach($roles as $role )
-                                    <a class="dropdown-item" href="#">{{$role['role']}}</a>
-                                @endforeach
+                                @foreach($UserRoles[$user->login] as $UserRole)
+                                    <a class="dropdown-item" href="{{route('delete_role',['user'=>$user,'role'=>$UserRole])}}">{{$UserRole}}
+                                @endforeach</a>
                             </div>
                         </div>
 
@@ -53,17 +53,17 @@
         </div>
         <div class="col-md-5 search-container alert alert-info">
             <div class="container-fluid ">
-
+                <form method="get" action="{{route("add_role")}}">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="inputGroup-sizing-default">Role</span>
                         </div>
-                        <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                        <input type="text" name="role" id="role" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
                         <div class="inner-search-element">
-                            <button class="btn btn-primary">New Role</button>
+                            <button class="btn btn-primary" type="submit">New Role</button>
                         </div>
                     </div>
-
+                </form>
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="inputGroup-sizing-default">Search by login</span>
