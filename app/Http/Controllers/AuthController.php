@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RegRequest;
+use App\Services\AuthService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Hash;
@@ -14,6 +15,11 @@ use Illuminate\Support\Str;
 use App\Models\User;
 class AuthController extends Controller
 {
+    protected $authService;
+    public function __construct(AuthService $authService){
+        $this->authService = $authService;
+    }
+
     public function login(Request $request){
 
         $user_2 = User::where('login',$request->input('login'))->first();
@@ -35,25 +41,9 @@ class AuthController extends Controller
     }
 
     public function registration(RegRequest $request){
+        $message = $this->authService->registration($request);
 
-         foreach(User::all() as $user_el){
-            if ($request->input('login') === $user_el->login)
-
-                return redirect()->route('registraion')->with("message","this email already exist");
-        }
-        $user = new User();
-        $user->login = $request->input('login');
-        $user->password = Hash::make($request->input('password'));
-
-        $user->save();
-
-        $user_role = new UserRole();
-        $user_role->user_id = $user->id;
-        $user_role->role_id = Role::where('role','Default')->first()['id'];
-
-        $user_role->save();
-        //после регистрации перенаправляет на login
-        return redirect()->route('login');
+        return redirect()->route('login')->with('message',$message);
 
     }
     public function logout(Request $request){

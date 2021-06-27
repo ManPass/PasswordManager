@@ -10,9 +10,9 @@ use RoleRecords;
 
 class User extends Authenticatable
 {
-    
-    use HasFactory,Notifiable;
 
+    use HasFactory,Notifiable;
+    protected $fillable = ['login','password'];
     function roles()
     {
         return $this->belongsToMany('App\Models\Role', 'user_roles');
