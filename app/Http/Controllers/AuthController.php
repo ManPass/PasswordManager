@@ -27,10 +27,10 @@ class AuthController extends Controller
             $token = Str::random(60);
             $user_2->remember_token = Hash::make($token);//копия хэшированного токена для бд
             $user_2->save();
-            $cookie = cookie('tk',$token,60);//копия токена для юзера
-            $cookie_log = cookie('l',$user_2->login,60);
-            $cookie_user_id = cookie('u',$user_2->id,60);
-            $cookie_role = cookie('p',1);
+            $cookie = cookie('token',$token,60);//копия токена для юзера
+            $cookie_log = cookie('login',$user_2->login,60);
+            $cookie_user_id = cookie('user_id',$user_2->id,60);
+            $cookie_role = cookie('role',1);
             return redirect()->route('home')->withCookie($cookie)->withCookie($cookie_log)
                 ->withCookie($cookie_user_id)->withCookie($cookie_role);
         }
@@ -47,7 +47,7 @@ class AuthController extends Controller
 
     }
     public function logout(Request $request){
-        return redirect()->route('login')->withCookie(Cookie::forget('l'))->
-        withCookie(Cookie::forget('tk'))->withCookie(Cookie::forget('u'));
+        return redirect()->route('login')->withCookie(Cookie::forget('login'))->
+        withCookie(Cookie::forget('token'))->withCookie(Cookie::forget('user_id'));
     }
 }
