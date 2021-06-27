@@ -20,12 +20,12 @@ Route::get('/login',function(){
 
 //login-sumbith
 Route::post('/login/submith','AuthController@login')->name('login-submith');
-//registraion web
+//registration web
 Route::get('/registration',function(){
-    return view('registraion');
-})->name('registraion')->middleware('repeater');
-//registraion-submith
-Route::post('/login','AuthController@registration')->name('registraion-submith');
+    return view('registration');
+})->name('registration')->middleware('repeater');
+//registration-submith
+Route::post('/login','AuthController@registration')->name('registration-submith');
 
 /*
 *Здесь покоятся роуты которые должны быть под защитой

@@ -22,14 +22,14 @@ class SecureAuth
         //находим юзера по айди из куков
         //dd($user);
 
-        if ($request->hasCookie('tk') != false && $request->hasCookie('l') != false &&
-            $request->hasCookie('u') != false){//если куки найдены
+        if ($request->hasCookie('token') != false && $request->hasCookie('login') != false &&
+            $request->hasCookie('user_id') != false){//если куки найдены
 
-            $user = User::find($request->cookie('u'));//ищем юзера по кукам
+            $user = User::find($request->cookie('user_id'));//ищем юзера по кукам
 
-            $session = Hash::check($request->cookie('tk'),$user->remember_token);//сравниваем хэш токена в куках и в базе для аутендификации
+            $session = Hash::check($request->cookie('token'),$user->remember_token);//сравниваем хэш токена в куках и в базе для аутендификации
             if($session){          //если все норм то даем доступ дальше
-                $request->request->add(['login'=> $request->cookie('l')]);
+                $request->request->add(['login'=> $request->cookie('login')]);
                 return $next($request);
             }
         }

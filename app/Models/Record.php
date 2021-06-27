@@ -30,4 +30,5 @@ class Record extends Model
     {
         return $this->belongsToMany('App\Models\Role', 'role_records', 'records_id', 'role_id');
     }
+
 }

@@ -21,11 +21,11 @@
         <label for="password">Password</label>
         <input type="password" name="password" placeholder="input password" id="password" class="form-control">
     </div>
-    
+
         <button type="submit" class="btn btn-success">Submit</button>
-        <p class="message">Not registered? <a href="{{route('registraion')}}">Create an account</a></p>
-    
+        <p class="message">Not registered? <a href="{{route('registration')}}">Create an account</a></p>
+
 </form>
-  
+
 </div>
 @endsection

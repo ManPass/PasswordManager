@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    
+
     <div class="login-page">
     @if ($errors->any())
         <div class="alert alert-danger">
@@ -16,7 +16,7 @@
             </ul>
         </div>
     @endif
-    <form action="{{ route('registraion-submith') }}" method="post">
+    <form action="{{ route('registration-submith') }}" method="post">
         @if(session('message'))
             <div class="alert alert-danger">
                 {{session('message')}}
@@ -37,9 +37,9 @@
             <label for="password">Password</label>
             <input type="password" name="password" placeholder="Input password" id="password" class="form-control">
         </div>
-        
+
         <button type="submit" class="btn btn-success">Submit</button>
-        
+
     </form>
     </div>
 @endsection
