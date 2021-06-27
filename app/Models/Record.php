@@ -11,7 +11,7 @@ class Record extends Model
     protected $fillable = ['source', 'password', 'login', 'url', 'comment', 'tag'];
     use HasFactory;
 
-    
+
 
     function roleRecords()
     {
@@ -25,6 +25,7 @@ class Record extends Model
 
     function roles()
     {
-        return $this->belongsToMany('App\Models\Role', 'role_records');
+        return $this->belongsToMany('App\Models\Role', 'role_records', 'records_id', 'role_id');
     }
+
 }

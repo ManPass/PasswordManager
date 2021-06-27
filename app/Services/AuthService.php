@@ -5,19 +5,26 @@ namespace App\Services;
 
 
 use App\Models\User;
+use App\Policies\AuthPolice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Support\Str;
 class AuthService
 {
+    protected $authPolice;//проверяет всю логику доступа юзера
+
+    public function __construct(AuthPolice $authPolice){
+        $this->authPolice = $authPolice;
+
+    }
 
     /**
      * @param Request $request
-     * @return string
+     * @return bool
      */
-    public function registration(Request $request){
-        if ($this->uniqueLogin($request->input('login')) == false)
-            return "Данный логин уже занят";
+    public function registration(Request $request):bool{
+        if ($this->authPolice->uniqueLogin($request->input('login')) == false)
+            return false;
         $user = User::create(
             [
                 'login' => $request->input('login'),
@@ -29,17 +36,15 @@ class AuthService
 
         $user->roles()->attach(1);
 
-        return "Регистрация успешна";
+        return true;
 
     }
     public function login(Request $request ){
+        $user = $this->authPolice->userExists($request);//проверка введенных данных
+        if ($user == null) return null;
+
+        return $user;
 
     }
-    private function uniqueLogin(string $login):bool{
-        foreach (User::all() as $user) {
-            if ($login === $user->login)
-                return false;
-        }
-        return true;
-    }
+
 }
