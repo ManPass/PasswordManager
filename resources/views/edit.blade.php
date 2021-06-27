@@ -45,12 +45,12 @@
 
             <div class="form-group">
                 <label for="comment">Комментарии: </label>
-                <textarea name="comment" value="{{$data->comment}}" id="comment" class="form-control"></textarea>
+                <textarea name="record[comment]" value="{{$data->comment}}" id="comment" class="form-control"></textarea>
             </div>
 
             <div class="form-group">
                 <label for="tag">Теги (через запятую) </label>
-                <input type="text" name="tag" value="{{$data->tag}}" id="tag" class="form-control">
+                <input type="text" name="record[tag]" value="{{$data->tag}}" id="tag" class="form-control">
             </div>
 
             <div class="form-group">

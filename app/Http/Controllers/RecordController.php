@@ -14,16 +14,15 @@ use Illuminate\Support\Facades\DB;
 
 class RecordController extends Controller
 {
-    //============public==========================================================
     /*
      * Добавление новой записи
      */
     public function addRecord(RecordRequest $req): RedirectResponse
     {
+
         $roleId = $req->cookie('p');
         $userRoleId = UserRole::all()->where('user_id', $req->cookie('u'))
             ->where('role_id', $roleId)->first()->id;
-        //dd($userRoleId);
         $record = Record::create(
             [
                 'source' => $req->source,
@@ -76,7 +75,7 @@ class RecordController extends Controller
     }
 
     //Редактирование записи
-    public function updateSubmit($id, RecordRequest $request): RedirectResponse
+    public function updateRecord($id, RecordRequest $request): RedirectResponse
     {
         $record = Record::find($id);
         $record->source = $request->input('source');
@@ -109,7 +108,6 @@ class RecordController extends Controller
         return redirect()->route('records-data');
     }
 
-    //===========================private=============================
     private function getRoles(Request $req)
     {
         return User::find($req->cookie('u'))->roles->all('id', $req->cookie('p')) ?? [];

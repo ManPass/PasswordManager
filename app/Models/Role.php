@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Role extends Model
 {
@@ -22,7 +24,7 @@ class Role extends Model
 
     function records()
     {
-        return $this->belongsToMany('App\Models\Record', 'role_records', 'user_role_id', 'records_id');
+        return $this->belongsToMany('App\Models\Record', 'role_records');
     }
 
 

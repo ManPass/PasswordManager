@@ -11,14 +11,20 @@ class Record extends Model
     protected $fillable = ['source', 'password', 'login', 'url', 'comment', 'tag'];
     use HasFactory;
 
+    
+
     function roleRecords()
     {
         return $this->hasMany(RoleRecord::class, 'records_id');
     }
 
+    function user()
+    {
+        return $this->belongsTo('App\Models\User');
+    }
 
     function roles()
     {
-        return $this->belongsToMany('App\Models\Role', 'role_records', 'records_id', 'user_role_id');
+        return $this->belongsToMany('App\Models\Role', 'role_records');
     }
 }
