@@ -21,7 +21,7 @@ class RecordService
     public function getRoles()
     {
         $roles = $this->getUser()->roles;
-        return $this->getUser()->roles ?? [];
+        return $roles ?? [];
     }
 
 
