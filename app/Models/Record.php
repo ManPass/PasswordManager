@@ -11,11 +11,14 @@ class Record extends Model
     protected $fillable = ['source', 'password', 'login', 'url', 'comment', 'tag'];
     use HasFactory;
 
-    
-
-    function roleRecords()
+    public function getPasswordAttribute($value)
     {
-        return $this->hasMany(RoleRecord::class, 'records_id');
+        return decrypt($value);
+    }
+
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = encrypt($value);
     }
 
     function user()
@@ -25,6 +28,6 @@ class Record extends Model
 
     function roles()
     {
-        return $this->belongsToMany('App\Models\Role', 'role_records');
+        return $this->belongsToMany('App\Models\Role', 'role_records', 'records_id', 'role_id');
     }
 }

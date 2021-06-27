@@ -22,7 +22,7 @@ class Records extends Migration
                 $table->string("url", 255)->nullable();
                 $table->text("comment")->nullable();
                 $table->string("tag")->nullable();
-                $table->integer("user_id")->unsigned();
+                $table->integer("user_id")->unsigned()->nullable()->default(null);
 
                 $table->foreign("user_id")->references("id")->on("users");
             });

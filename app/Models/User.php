@@ -4,9 +4,7 @@ namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
-use RoleRecords;
 
 class User extends Authenticatable
 {
@@ -20,6 +18,6 @@ class User extends Authenticatable
 
     function record()
     {
-        return $this->hasOne('App\Models\Record');
+        return $this->belongsToMany('App\Models\Record');
     }
 }

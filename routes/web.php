@@ -59,7 +59,7 @@ Route::group(['middleware' => ['auth']],function () {
 
     Route::get('records/show/{id}','RecordController@showRecord')->name('record-show'); //просмотр
 
-    Route::post('records/edit/{id}/update','RecordController@updateSubmit')->name('record-update');
+    Route::post('records/edit/{id}/update','RecordController@updateRecord')->name('record-update');
 
     Route::get('records/edit/{id}','RecordController@editRecord')->name('record-edit'); //для изменения запИси
 

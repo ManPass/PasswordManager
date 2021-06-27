@@ -6,6 +6,7 @@
 
 @section('aside')
     <form method="get" action="{{route('change-role')}}">
+
         <div class="form-group">
             <label for="role_choose">Сменить роль</label>
             <select class="form-control" name="role_choose" id="role_choose" value="{{request()->cookie('p')}}">
@@ -18,6 +19,7 @@
                 @endforeach
             </select>
         </div>
+
         <div class = "form-group">
             <button type="submit" class="btn btn-primary btn-success">Изменить</button>
         </div>
@@ -66,8 +68,7 @@
             </div>
         </form>
     @endif
-        @forelse ( $data as $one)
-            @foreach($one as $el )
+        @forelse ( $data as $el)
         <form method="get" action="{{ route('record-show', $el->id) }}">
             <div class="alert alert-info">
                 <h2>{{$el->source}}</h2>
@@ -83,7 +84,6 @@
                 <button type="submit" class="btn btn-success">Показать</button>
             </div>
         </form>
-            @endforeach
         @empty
             <h1>У вас нет сохранённых паролей.</h1>
         @endforelse
