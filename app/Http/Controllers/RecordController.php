@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\RecordRequest;
 use App\Models\Record;
 use Illuminate\Http\RedirectResponse;
-use App\Http\Services\RecordService;
+use App\Services\RecordService;
 
 class RecordController extends Controller
 {
@@ -34,7 +34,7 @@ class RecordController extends Controller
                 'tag' => $req->tag
             ]
         );
-        $record->roles()->attach($req->cookie('p'));
+        $record->roles()->attach($req->cookie('role_id'));
 
         return redirect()->route('records-data');
     }

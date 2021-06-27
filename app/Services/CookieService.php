@@ -22,7 +22,7 @@ class CookieService
         return cookie('user_id',$userId,60);
     }
     public function cookieDefaultRole(){
-        return cookie('role',1);
+        return cookie('role_id',1);
     }
 
     public function allBasicCookie(User $user){

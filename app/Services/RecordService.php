@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Services;
+namespace App\Services;
 
 use App\Models\Record;
 use App\Models\User;
@@ -9,13 +9,13 @@ class RecordService
 {
     private function getUser()
     {
-        return User::find(request()->cookie('u'));
+        return User::find(request()->cookie('user_id'));
     }
     public function getRecords()
     {
-        $currentRole = $this->getUser()->roles->find(request()->cookie('p'));
+        $usersRoles = $this->getUser()->roles;
 
-        return $currentRole->records ?? [];
+        return $usersRoles->find(request()->cookie('role_id'))->records ?? [];
     }
 
     public function getRoles()
