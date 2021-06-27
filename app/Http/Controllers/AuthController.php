@@ -27,7 +27,7 @@ class AuthController extends Controller
         if (($user = $this->authService->login($request))!=null){
             $cookies = $this->cookieService->allBasicCookie($user);
             return redirect()->route('home')->withCookie($cookies['token'])->withCookie($cookies['login'])
-                ->withCookie($cookies['user_id'])->withCookie($cookies['role']);
+                ->withCookie($cookies['user_id'])->withCookie($cookies['role_id']);
         }
         else return redirect()->route('login')->with("message","wrong email or password");
     }
@@ -39,7 +39,7 @@ class AuthController extends Controller
             return redirect()->route('registration')->with('message','Данный логин уже занят');
     }
     public function logout(Request $request){
-        return redirect()->route('login')->withCookie(Cookie::forget('login'))->
+        return redirect()->route('login')->withCookie(Cookie::forget('role_id'))->
         withCookie(Cookie::forget('token'))->withCookie(Cookie::forget('user_id'));
     }
 }

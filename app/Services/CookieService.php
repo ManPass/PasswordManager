@@ -30,7 +30,7 @@ class CookieService
             'token' => $this->cookieToken($user),
             'login' => $this->cookieLogin($user->login),
             'user_id' => $this->cookieUserId($user->id),
-            'role' => $this->cookieDefaultRole()
+            'role_id' => $this->cookieDefaultRole()
         ];
     }
 }
