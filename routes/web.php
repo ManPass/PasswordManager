@@ -15,14 +15,14 @@ use Illuminate\Support\Facades\Route;
 
 //login web
 Route::get('/login',function(){
-    return view('login');
+    return view('auth/login');
 })->name('login')->middleware('repeater');
 
 //login-sumbith
 Route::post('/login/submith','AuthController@login')->name('login-submith');
 //registration web
 Route::get('/registration',function(){
-    return view('registration');
+    return view('auth/registration');
 })->name('registration')->middleware('repeater');
 //registration-submith
 Route::post('/login','AuthController@registration')->name('registration-submith');
@@ -41,39 +41,45 @@ Route::group(['middleware' => ['auth']],function () {
     Route::get('/records/add', function(){
         return view('add');
     })->name('add');
-    Route::get('/home', function () {
-        return view('home');
-    })->name('home');
 
-    Route::get('/default',function(){
-        return view('welcome');
-    });
+    Route::post('records/submit',
+        'RecordController@addRecord')->name('records-form');
 
-    Route::post('records/submit','RecordController@addRecord')->name('records-form');
+    Route::get('records/changerole',
+        'RoleController@changeSelectedRole')->name('change-role');
 
-    Route::get('records/changerole', 'RoleController@changeSelectedRole')->name('change-role');
+    Route::get('/records/',
+        'RecordController@showAllRecords')->name('records-data');
 
-    Route::get('/records/','RecordController@showAllRecords')->name('records-data');
+    Route::get('/records/search',
+        'RecordController@searchRecord')->name('search');
 
-    Route::get('/records/search', 'RecordController@searchRecord')->name('search');
+    Route::get('records/show/{id}',
+        'RecordController@showRecord')->name('record-show'); //просмотр
 
-    Route::get('records/show/{id}','RecordController@showRecord')->name('record-show'); //просмотр
+    Route::post('records/edit/{id}/update',
+        'RecordController@updateRecord')->name('record-update');
 
-    Route::post('records/edit/{id}/update','RecordController@updateRecord')->name('record-update');
+    Route::get('records/edit/{id}',
+        'RecordController@editRecord')->name('record-edit'); //для изменения запИси
 
-    Route::get('records/edit/{id}','RecordController@editRecord')->name('record-edit'); //для изменения запИси
+    Route::get('records/delete/{id}',
+        'RecordController@deleteRecord')->name('record-delete');//для удаления
 
-    Route::get('records/delete/{id}','RecordController@deleteRecord')->name('record-delete');//для удаления
+    Route::get('/profile',
+        'ProfileController@viewProfile')->name('profile-data');
 
-    Route::get('/profile','ProfileController@viewProfile')->name('profile-data');
+    Route::get('/profile/{id}/changemail',
+        'ProfileController@viewChange1')->name('change-mail');
 
-    Route::get('/profile/{id}/changemail','ProfileController@viewChange1')->name('change-mail');
+    Route::get('/profile/{id}/changepassword',
+        'ProfileController@viewChange2')->name('change-password');
 
-    Route::get('/profile/{id}/changepassword','ProfileController@viewChange2')->name('change-password');
+    Route::post('/profile/{id}/submitM',
+        'ProfileController@changeMail')->name('change-mail-submit');
 
-    Route::post('/profile/{id}/submitM','ProfileController@changeMail')->name('change-mail-submit');
-
-    Route::post('/profile/{id}/submitP','ProfileController@changePassword')->name('change-password-submit');
+    Route::post('/profile/{id}/submitP',
+        'ProfileController@changePassword')->name('change-password-submit');
 
     //logout
     Route::get('/','AuthController@logout')->name('logout');

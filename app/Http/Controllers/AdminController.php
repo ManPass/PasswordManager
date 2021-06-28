@@ -13,7 +13,6 @@ class AdminController extends Controller
         $this->adminService = $adminService;
     }
     public function showAllUsers(Request $request){
-
         return view('admin/admin_page',['data'=> $this->adminService->showAllUsers($request) ,
             'roles' => Role::all()]);
     }

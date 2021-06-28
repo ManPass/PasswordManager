@@ -22,7 +22,6 @@ class ProfileController extends Controller
 
     public function viewProfile(Request $request)
     {
-        $users = User::find($request->cookie('u'));
         return view('profile', ['data' => User::find($request->cookie('user_id'))]);
     }
 

@@ -23,7 +23,12 @@ class AdminService{
     }
     public function showAllUsers(Request $request): array
     {
-        return $this->dataExtraction(User::all());
+        if ($request->input('loginSearch') != null) {//если был поиск по конкретному логину
+
+            return $this->dataExtraction([User::where('login', $request->input('loginSearch'))->first()]);
+        }
+        else
+            return $this->dataExtraction(User::all());
     }
     public function addRole(Request $request){
         $role = Role::create([

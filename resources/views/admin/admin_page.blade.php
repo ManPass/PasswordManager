@@ -59,21 +59,25 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="inputGroup-sizing-default">Role</span>
                         </div>
-                        <input type="text" name="role" id="role" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                        <input type="text" name="role" id="role" class="form-control" aria-label="Default"
+                               aria-describedby="inputGroup-sizing-default">
                         <div class="inner-search-element">
                             <button class="btn btn-primary" type="submit">New Role</button>
                         </div>
                     </div>
                 </form>
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="inputGroup-sizing-default">Search by login</span>
+                <form method="get" action="{{route("admin_page")}}">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default">Search by login</span>
+                        </div>
+                        <input type="text" class="form-control" name="loginSearch" id="loginSearch" aria-label="Default"
+                               aria-describedby="inputGroup-sizing-default">
+                        <div class="inner-search-element">
+                            <button class="btn btn-primary">Find</button>
+                        </div>
                     </div>
-                    <input type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
-                    <div class="inner-search-element">
-                        <button class="btn btn-primary">Find</button>
-                    </div>
-                </div>
+                </form>
         </div>
 
     </div>
