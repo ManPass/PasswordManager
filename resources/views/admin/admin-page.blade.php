@@ -27,7 +27,7 @@
                             </button>
                             <div class="dropdown-menu">
                                 @foreach($roles as $role )
-                                    <a class="dropdown-item" href="{{route('add_role_to_user',['login'=>$user['login'],'role_id'=>$role['id']])}}">{{$role['role']}}</a>
+                                    <a class="dropdown-item" href="{{route('add-role-to-user',['login'=>$user['login'],'role_id'=>$role['id']])}}">{{$role['role']}}</a>
                                 @endforeach
                             </div>
                         </div>
@@ -38,7 +38,7 @@
                             </button>
                             <div class="dropdown-menu">
                                 @foreach($user['roles'] as $role)
-                                    <a class="dropdown-item" href="{{route('delete_role_to_user',['login'=>$user['login'],'role_id'=>$role['id']])}}">{{$role['role']}}</a>
+                                    <a class="dropdown-item" href="{{route('delete-role-to-user',['login'=>$user['login'],'role_id'=>$role['id']])}}">{{$role['role']}}</a>
                                 @endforeach
                             </div>
 
@@ -54,7 +54,7 @@
         </div>
         <div class="col-md-5 search-container alert alert-info">
             <div class="container-fluid ">
-                <form method="get" action="{{route("add_role")}}">
+                <form method="get" action="{{route("add-role")}}">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="inputGroup-sizing-default">Role</span>
@@ -66,7 +66,7 @@
                         </div>
                     </div>
                 </form>
-                <form method="get" action="{{route("admin_page")}}">
+                <form method="get" action="{{route("admin-page")}}">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="inputGroup-sizing-default">Search by login</span>

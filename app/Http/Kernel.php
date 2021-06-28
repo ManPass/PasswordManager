@@ -55,6 +55,7 @@ class Kernel extends HttpKernel
     protected $routeMiddleware = [
         //'auth' => \App\Http\Middleware\Authenticate::class, дефолтный аут для шаблона начального
         'repeater' => \App\Http\Middleware\RepeatedLogin::class,
+        'admin'=> \App\Http\Middleware\SecureAdmin::class,
         'auth' => \App\Http\Middleware\SecureAuth::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,

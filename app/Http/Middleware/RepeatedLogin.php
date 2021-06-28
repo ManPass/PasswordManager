@@ -2,11 +2,16 @@
 
 namespace App\Http\Middleware;
 
+use App\Policies\AuthPolice;
 use Closure;
 use Illuminate\Http\Request;
 
 class RepeatedLogin
 {
+    protected $authPolice;
+    public function __construct(AuthPolice $authPolice){
+        $this->authPolice = $authPolice;
+    }
     /**
      * Handle an incoming request.
      *
@@ -19,13 +24,10 @@ class RepeatedLogin
         //при переходе на логин или регистрацию уже зарегестрированные пользователи должны
         //пересылаться на домашнюю страницу
 
-        if ($request->hasCookie('token') != false && $request->hasCookie('login') != false &&
-            $request->hasCookie('user_id') != false){
+        if ($this->authPolice->userValid($request)!=null){
             return redirect()->route('records-data');
         }
-        else {
-            return $next($request);
-        }
+        return $next($request);
 
     }
 }

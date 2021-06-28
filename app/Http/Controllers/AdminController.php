@@ -13,22 +13,22 @@ class AdminController extends Controller
         $this->adminService = $adminService;
     }
     public function showAllUsers(Request $request){
-        return view('admin/admin_page',['data'=> $this->adminService->showAllUsers($request) ,
+        return view('admin/admin-page',['data'=> $this->adminService->showAllUsers($request) ,
             'roles' => Role::all()]);
     }
     public function addRole(Request $request){
         $this->adminService->addRole($request);
 
-        return redirect()->route('admin_page',['answer' => 'ok']);
+        return redirect()->route('admin-page',['answer' => 'ok']);
     }
     public function deleteRoleToUser(Request $request){
         $this->adminService->deleteRoleToUser($request);
 
-        return redirect()->route('admin_page',['answer' => 'role_successful_deleted']);
+        return redirect()->route('admin-page',['answer' => 'role_successful_deleted']);
     }
     public function addRoleToUser(Request $request){
 
         $this->adminService->addRoleToUser($request);
-        return redirect()->route('admin_page',['answer' => 'role_successful_add']);
+        return redirect()->route('admin-page',['answer' => 'role_successful_add']);
     }
 }

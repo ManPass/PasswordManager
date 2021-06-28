@@ -25,26 +25,23 @@ class AuthService
     public function registration(Request $request):bool{
         if ($this->authPolice->uniqueLogin($request->input('login')) == false)
             return false;
-        $user = User::create(
-            [
-                'login' => $request->input('login'),
-                'password' => Hash::make($request->input('password'))
-            ]
-        );
+        else
+            $user = User::create(
+                [
+                    'login' => $request->input('login'),
+                    'password' => Hash::make($request->input('password'))
+                ]
+            );
+            $user->save();
 
-        $user->save();
+            $user->roles()->attach(1);
 
-        $user->roles()->attach(1);
-
-        return true;
-
+            return true;
     }
     public function login(Request $request ){
         $user = $this->authPolice->userExists($request);//проверка введенных данных
         if ($user == null) return null;
-
         return $user;
-
     }
 
 }

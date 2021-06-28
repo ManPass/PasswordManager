@@ -39,7 +39,6 @@ class AdminService{
     /**
      * @param $users
      * @return array
-     * получение массива данных ['login'=>логин пользователя,'roles'=>[['role'=>роль1,'role_id'=>id],..]] для админки
      */
     private function dataExtraction($users): array
     {

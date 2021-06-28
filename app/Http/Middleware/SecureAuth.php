@@ -3,11 +3,15 @@
 namespace App\Http\Middleware;
 
 use App\Models\User;
+use App\Policies\AuthPolice;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-class SecureAuth
-{
+class SecureAuth{
+    protected $authPolice;
+    public function __construct(AuthPolice $authPolice){
+        $this->authPolice = $authPolice;
+    }
     /**
      * Handle an incoming request.
      *
@@ -15,22 +19,11 @@ class SecureAuth
      * @param  \Closure  $next
      * @return mixed
      */
-
     public function handle(Request $request, Closure $next)
     {
-
-        if ($request->hasCookie('token') != false && $request->hasCookie('login') != false &&
-            $request->hasCookie('user_id') != false){//если куки найдены
-
-            $user = User::find($request->cookie('user_id'));//ищем юзера по кукам
-
-            $session = Hash::check($request->cookie('token'),$user->remember_token);//сравниваем хэш токена в куках и в базе для аутендификации
-            if($session){          //если все норм то даем доступ дальше
-                $request->request->add(['loginAcc'=> $request->cookie('login')]);
-                return $next($request);
-            }
-        }
-        //если куки были подменены или удалены то отправляем на перелогин
+        if (($validRequest = $this->authPolice->userValid($request))!=null)
+            return $next($validRequest);
+        else
             return redirect()->route('login');
 
     }
