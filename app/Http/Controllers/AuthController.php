@@ -25,7 +25,7 @@ class AuthController extends Controller
     public function login(Request $request){
         if (($user = $this->authService->login($request))!=null){
             $cookies = $this->cookieService->allBasicCookie($user);
-            return redirect()->route('home')->withCookie($cookies['token'])->withCookie($cookies['login'])
+            return redirect()->route('records-data')->withCookie($cookies['token'])->withCookie($cookies['login'])
                 ->withCookie($cookies['user_id'])->withCookie($cookies['role_id']);
         }
         else return redirect()->route('login')->with("message","wrong email or password");

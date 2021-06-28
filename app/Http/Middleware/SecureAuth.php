@@ -18,9 +18,6 @@ class SecureAuth
 
     public function handle(Request $request, Closure $next)
     {
-        //можно сделать полноценную проверку из базы с поиском совпадений, а не просто присутствие куков
-        //находим юзера по айди из куков
-        //dd($user);
 
         if ($request->hasCookie('token') != false && $request->hasCookie('login') != false &&
             $request->hasCookie('user_id') != false){//если куки найдены

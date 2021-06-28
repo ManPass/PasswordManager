@@ -18,13 +18,14 @@ class RepeatedLogin
     {
         //при переходе на логин или регистрацию уже зарегестрированные пользователи должны
         //пересылаться на домашнюю страницу
-        $session = $request->cookie('login') != null && $request->cookie('valid') != null;
-        if ($session){
-            return redirect()->route('home');
+
+        if ($request->hasCookie('token') != false && $request->hasCookie('login') != false &&
+            $request->hasCookie('user_id') != false){
+            return redirect()->route('records-data');
         }
         else {
             return $next($request);
         }
-      
+
     }
 }
