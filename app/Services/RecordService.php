@@ -18,10 +18,19 @@ class RecordService
         return $usersRoles->find(request()->cookie('role_id'))->records ?? [];
     }
 
+    public function getPersonalRecords()
+    {
+        return $this->getUser()->records ?? [];
+    }
+
+    public function addPersonalRecord($record)
+    {
+        $this->getUser()->records()->save($record);
+    }
+
     public function getRoles()
     {
-        $roles = $this->getUser()->roles;
-        return $roles ?? [];
+        return $this->getUser()->roles ?? [];
     }
 
 

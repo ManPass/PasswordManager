@@ -34,7 +34,15 @@ class RecordController extends Controller
                 'tag' => $req->tag
             ]
         );
-        $record->roles()->attach($req->cookie('role_id'));
+        if(request()->personal)
+        {
+            $this->recordService->addPersonalRecord($record);
+        }
+        else
+        {
+            $record->roles()->attach($req->cookie('role_id'));
+        }
+        
 
         return redirect()->route('records-data');
     }
@@ -77,7 +85,8 @@ class RecordController extends Controller
     public function showAllRecords()
     {
         return view("myInfo", [
-            'data' => $this->recordService->getRecords(),
+            'records' => $this->recordService->getRecords(),
+            'personal' => $this->recordService->getPersonalRecords(),
             'roles' => $this->recordService->getRoles()
         ]);
     }

@@ -56,6 +56,9 @@
             <label>* - поле является обязательным для заполнения</label>
         </div>
 
+        <label for="personal">Личный пароль</label>
+        <input type="checkbox" name="personal" id="personal" value="isPersonal">
+
         <button type="submit" class="btn btn-success">Сохранить</button>
     
     </form>

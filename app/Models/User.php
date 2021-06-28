@@ -16,8 +16,8 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Models\Role', 'user_roles');
     }
 
-    function record()
+    function records()
     {
-        return $this->belongsToMany('App\Models\Record');
+        return $this->hasMany('App\Models\Record');
     }
 }

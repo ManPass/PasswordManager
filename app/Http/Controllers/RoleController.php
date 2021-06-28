@@ -9,7 +9,7 @@ class RoleController extends Controller
 {
     function changeSelectedRole(Request $req): RedirectResponse
     {
-        $role = cookie('p', $req->input('role_choose'));
+        $role = cookie('role_id', $req->input('role_choose'));
 
         return redirect()->route('records-data')->withCookie($role);
     }
