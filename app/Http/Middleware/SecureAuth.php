@@ -29,7 +29,7 @@ class SecureAuth
 
             $session = Hash::check($request->cookie('token'),$user->remember_token);//сравниваем хэш токена в куках и в базе для аутендификации
             if($session){          //если все норм то даем доступ дальше
-                $request->request->add(['login'=> $request->cookie('login')]);
+                $request->request->add(['loginAcc'=> $request->cookie('login')]);
                 return $next($request);
             }
         }
