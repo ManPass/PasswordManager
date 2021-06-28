@@ -48,7 +48,6 @@ class RecordController extends Controller
     //Поиск записей
     public function searchRecord(Request $req)
     {
-        $word = "к";
         $searchableRecords = $this->recordService->getRecords()
             ->where($req->choose, $req->search);
         return view('myInfo',
@@ -75,7 +74,7 @@ class RecordController extends Controller
     }
 
     //Показ всех записей
-    public function showAllRecords(Request $req)
+    public function showAllRecords()
     {
         return view("myInfo", [
             'data' => $this->recordService->getRecords(),
