@@ -34,9 +34,9 @@ Route::post('/login','AuthController@registration')->name('registration-submith'
 Route::group(['middleware' => ['auth']],function () {
     //admin
     Route::get('/panel','AdminController@showAllUsers')->name('admin_page');
-    Route::get('/pane','AdminController@addRole')->name('add_role');
-    Route::get('/panels','AdminController@deleteRoleToUser')->name('delete_role');
-    Route::get('/pan','AdminController@addRoleToUser')->name('add_role_to_user');
+    Route::get('/panel_add_role','AdminController@addRole')->name('add_role');
+    Route::get('/panel_del','AdminController@deleteRoleToUser')->name('delete_role_to_user');
+    Route::get('/panel_add_role_to_user','AdminController@addRoleToUser')->name('add_role_to_user');
     //admin
     Route::get('/records/add', function(){
         return view('add');

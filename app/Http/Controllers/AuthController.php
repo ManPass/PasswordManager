@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
-use App\Models\UserRole;
 use App\Models\Role;
 use Illuminate\Support\Str;
 //use App\Http\Requests\RegistraionRequest;

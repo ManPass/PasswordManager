@@ -11,12 +11,12 @@ class User extends Authenticatable
 
     use HasFactory,Notifiable;
     protected $fillable = ['login','password'];
-    function roles()
+    public function roles()
     {
         return $this->belongsToMany('App\Models\Role', 'user_roles');
     }
 
-    function record()
+    public function record()
     {
         return $this->belongsToMany('App\Models\Record');
     }
