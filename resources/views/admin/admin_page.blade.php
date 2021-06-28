@@ -16,9 +16,9 @@
                 @if($data)
                     @foreach($data as $user)
                     <div class="alert alert-info search-element" >
-                        <p class="fw-bold fs-2">{{$user->login}}</p>
+                        <p class="fw-bold fs-2">{{$user['login']}}</p>
                         <div class="inner-search-element">
-                            <p>Role: @foreach($UserRoles[$user->login] as $UserRole) {{$UserRole}} @endforeach</p>
+                            <p>Role: @foreach($user['roles'] as $role) {{$role['role']}} @endforeach</p>
                         </div>
                         <div class="btn-group">
                             <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -27,7 +27,7 @@
                             </button>
                             <div class="dropdown-menu">
                                 @foreach($roles as $role )
-                                    <a class="dropdown-item" href="{{route('add_role_to_user',['user'=>$user,'role_id'=>$role])}}">{{$role['role']}}</a>
+                                    <a class="dropdown-item" href="{{route('add_role_to_user',['login'=>$user['login'],'role_id'=>$role['id']])}}">{{$role['role']}}</a>
                                 @endforeach
                             </div>
                         </div>
@@ -37,10 +37,11 @@
                                 <span class="sr-only">Toggle Dropdown</span>
                             </button>
                             <div class="dropdown-menu">
-                                @foreach($UserRoles[$user->login] as $UserRole)
-                                    <a class="dropdown-item" href="{{route('delete_role',['user'=>$user,'role'=>$UserRole])}}">{{$UserRole}}
-                                @endforeach</a>
+                                @foreach($user['roles'] as $role)
+                                    <a class="dropdown-item" href="{{route('delete_role_to_user',['login'=>$user['login'],'role_id'=>$role['id']])}}">{{$role['role']}}</a>
+                                @endforeach
                             </div>
+
                         </div>
 
                     </div>

@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Role extends Model
 {
     public $timestamps = false;
+    protected $fillable = ['role'];
     use HasFactory;
 
     function users(): BelongsToMany
@@ -20,5 +21,4 @@ class Role extends Model
     {
         return $this->belongsToMany('App\Models\Record', 'role_records', 'role_id', 'records_id');
     }
-
 }
