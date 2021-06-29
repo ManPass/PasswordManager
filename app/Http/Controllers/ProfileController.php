@@ -6,68 +6,55 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\MailChangeRequest;
 use App\Http\Requests\PasswordChangeRequest;
-use App\Models\Contact;
 use App\Models\User;
-use App\Models\Role;
+use App\Services\Account\ProfileService;
+//use App\Models\Role;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\Encryption\DecryptException;
 
 class ProfileController extends Controller
 {
-    /*public function profileView(){
-        $users = Users::all();
-        dd($users);
+    protected $user;
+    protected $profileService;
 
-    }*/
-
-    public function viewProfile(Request $request)
+    public function __construct(User $user, ProfileService $profileService)
     {
-        return view('profile', ['data' => User::find($request->cookie('user_id'))]);
+        $this->user = $user;
+        $this->profileService = $profileService;
     }
 
-    public function viewChange1($id){
-        return view('change-mail', ['data' => User::find($id)]);
-    }
-    public function viewChange2($id){
-        return view('change-password', ['data' => User::find($id)]);
+    public function viewProfile()
+    {
+        return view('profile', ['data' => $this->profileService->getUser()]);
     }
 
-    public function changeMail($id, MailChangeRequest $request){
-        $user = User::find($id);
-        if (Hash::check($request->input('password'),$user->password)){
-            foreach(User::all() as $user_el){
-                if ($request->input('email') === $user_el->login)
-
-                    return redirect()->route('change-mail', $id)->with("message","Такой адрес электронной почты уже существует");
-            }
-
-            $user = User::find($id);
-            $user->login = $request->input('email');
-            $user->save();
-
-            return redirect()->route('profile-data')->with("message","Адрес эл. почты изменён");
-        }
-        else {
-            return redirect()->route('change-mail', $id)->with("message","Неверный пароль");
-        }
-
+    public function viewMailChange(){
+        return view('change-mail', ['data' => $this->profileService->getUser()]);
     }
+    public function viewPasswordChange(){
+        return view('change-password', ['data' => $this->profileService->getUser()]);
+    }
+
+    public function changeMail(MailChangeRequest $request){
+        if ($this->profileService->checkPassword($request) == true){
+            if ($this->profileService->changeMail($request) == true)
+                return redirect()->route('profile-data')->with('message','Почта изменена');
+            else
+                return redirect()->route('change-mail',$this->profileService->getUser())->with('message','Данная почта уже существует');
+
+        } else return redirect()->route('change-mail',$this->profileService->getUser())->with('message','Неверный пароль');
+    }
+
 
     public function changePassword($id, PasswordChangeRequest $request){
-        $user = User::find($id);
-        if (Hash::check($request->input('password1'),$user->password)){
-            if ($request->input('password2')===$request->input('password3')){
-                $user = User::find($id);
-                $user->password = Hash::make($request->input('password2'));
-                $user->save();
-                return redirect()->route('profile-data')->with("message","Пароль изменён");
-            } else {
-            return redirect()->route('change-password', $id)->with("message","Пароли не совпадают");
-            }
-        }
-        else {
-            return redirect()->route('change-password', $id)->with("message","Неверный пароль");
-        }
+        if ($this->profileService->checkPassword($request) == true){
+            if ($this->profileService->changePassword($request) == true)
+                return redirect()->route('profile-data')->with('message','Пароль изменён');
+            else
+                return redirect()->route('change-password',$this->profileService->getUser())->with('message','Пароли не совпадают');
+
+        } else return redirect()->route('change-password',$this->profileService->getUser())->with('message','Неверный пароль');
+
 
     }
 

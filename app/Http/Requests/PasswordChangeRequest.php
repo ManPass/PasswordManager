@@ -24,9 +24,9 @@ class PasswordChangeRequest extends FormRequest
     public function rules()
     {
         return [
-            'password1' => 'required|min:5|max:15',
-            'password2' => 'required|min:5|max:15',
-            'password3' => 'required|min:5|max:15'
+            'password' => 'required|min:5|max:15',
+            'passwordNew' => 'required|min:5|max:15',
+            'passwordConfirm' => 'required|min:5|max:15'
         ];
     }
 }

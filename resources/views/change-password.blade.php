@@ -23,18 +23,18 @@
         @endif
         @csrf
         <div class="form-group">
-            <label for="password1">Старый пароль</label>
-            <input type="password" name="password1" placeholder="Введите пароль" id="password" class="form-control">
+            <label for="password">Старый пароль</label>
+            <input type="password" name="password" placeholder="Введите пароль" id="password" class="form-control">
         </div>
 
         <div class="form-group">
-            <label for="password2">Новый пароль</label>
-            <input type="password" name="password2" placeholder="Введите пароль" id="password" class="form-control">
+            <label for="passwordNew">Новый пароль</label>
+            <input type="password" name="passwordNew" placeholder="Введите пароль" id="password" class="form-control">
         </div>
 
         <div class="form-group">
-            <label for="password3">Новый пароль ещё раз</label>
-            <input type="password" name="password3" placeholder="Введите пароль" id="password" class="form-control">
+            <label for="passwordConfirm">Новый пароль ещё раз</label>
+            <input type="password" name="passwordConfirm" placeholder="Введите пароль" id="password" class="form-control">
         </div>
         
         <button type="submit" class="btn btn-success">Изменить</button>

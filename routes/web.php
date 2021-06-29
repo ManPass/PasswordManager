@@ -70,15 +70,15 @@ Route::group(['middleware' => ['auth']],function () {
         'ProfileController@viewProfile')->name('profile-data');
 
     Route::get('/profile/{id}/changemail',
-        'ProfileController@viewChange1')->name('change-mail');
+        'ProfileController@viewMailChange')->name('change-mail');
 
     Route::get('/profile/{id}/changepassword',
-        'ProfileController@viewChange2')->name('change-password');
+        'ProfileController@viewPasswordChange')->name('change-password');
 
-    Route::post('/profile/{id}/submitM',
+    Route::post('/profile/{id}/submitmail',
         'ProfileController@changeMail')->name('change-mail-submit');
 
-    Route::post('/profile/{id}/submitP',
+    Route::post('/profile/{id}/submitpassword',
         'ProfileController@changePassword')->name('change-password-submit');
 
     //logout
