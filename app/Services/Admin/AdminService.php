@@ -42,6 +42,8 @@ class AdminService{
      */
     private function dataExtraction($users): array
     {
+        //если переданные данные являются пустым запросом
+        if (($users == null) || (count($users) == 1 && $users[0]==null)) return [];
         $usersData = [];
         foreach ($users as $user){
             $usersData[] = ['login' => $user->login,'roles' => $user->roles];
