@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RegRequest;
-use App\Services\AuthService;
-use App\Services\CookieService;
+use App\Services\Auth\AuthService;
+use App\Services\Auth\CookieService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Hash;

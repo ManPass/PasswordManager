@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
 use App\Http\Requests\RecordRequest;
 use App\Models\Record;
 use Illuminate\Http\RedirectResponse;
-use App\Services\RecordService;
-
+use App\Services\Account\RecordService;
 class RecordController extends Controller
 {
     protected $record;
@@ -42,7 +42,7 @@ class RecordController extends Controller
         {
             $record->roles()->attach($req->cookie('role_id'));
         }
-        
+
 
         return redirect()->route('records-data');
     }
