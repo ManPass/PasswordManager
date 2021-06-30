@@ -10,13 +10,10 @@ use Illuminate\Http\RedirectResponse;
 use App\Services\Account\RecordService;
 class RecordController extends Controller
 {
-    protected $record;
-
     protected $recordService;
 
-    public function __construct(Record $record, RecordService $recordService)
+    public function __construct(RecordService $recordService)
     {
-        $this->record = $record;
         $this->recordService = $recordService;
     }
     /*
