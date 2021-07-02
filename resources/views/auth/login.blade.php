@@ -12,6 +12,11 @@
             {{session('message')}}
         </div>
     @endif
+    @if(session('message_success'))
+        <div class="alert alert-success">
+            {{session('message_success')}}
+        </div>
+        @endif
     @csrf
     <div class="form-group" >
         <label for="email">Email</label>
@@ -22,7 +27,7 @@
         <input type="password" name="password" placeholder="input password" id="password" class="form-control">
     </div>
 
-        <button type="submit" class="btn btn-success">Submit</button>
+        <button type="submit" class="btn btn-success">Login</button>
         <p class="message">Not registered? <a href="{{route('registration')}}">Create an account</a></p>
 
 </form>

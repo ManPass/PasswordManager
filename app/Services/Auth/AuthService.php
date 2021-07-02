@@ -22,7 +22,7 @@ class AuthService
      * @param Request $request
      * @return bool
      */
-    public function registration(Request $request):bool{
+    public function registrationValid(Request $request):bool{
         if ($this->authPolice->uniqueLogin($request->input('login')) == false)
             return false;
         else
@@ -38,7 +38,7 @@ class AuthService
 
             return true;
     }
-    public function login(Request $request ){
+    public function loginValid(Request $request ){
         $user = $this->authPolice->userExists($request);//проверка введенных данных
         if ($user == null) return null;
         return $user;

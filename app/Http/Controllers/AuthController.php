@@ -23,17 +23,17 @@ class AuthController extends Controller
     }
 
     public function login(Request $request){
-        if (($user = $this->authService->login($request))!=null){
+        if (($user = $this->authService->loginValid($request))!=null){
             $cookies = $this->cookieService->allBasicCookie($user);
             return redirect()->route('records-data')->withCookie($cookies['token'])->withCookie($cookies['login'])
                 ->withCookie($cookies['user_id'])->withCookie($cookies['role_id']);
         }
-        else return redirect()->route('login')->with("message","wrong email or password");
+        else return redirect()->route('login')->with("message","Неверный email или пароль");
     }
 
     public function registration(RegRequest $request){
-        if ($this->authService->registration($request) == true)
-            return redirect()->route('login')->with('message','регистрация успешна');
+        if ($this->authService->registrationValid($request) == true)
+            return redirect()->route('login')->with('message_success','Регистрация успешна');
         else
             return redirect()->route('registration')->with('message','Данный логин уже занят');
     }
