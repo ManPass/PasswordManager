@@ -20,44 +20,43 @@ class RecordRequest extends FormRequest
     public function rules()
     {
         return [
-            'source' => 'required|min:2|max:50',
-            'pass' => 'required|min:3|max:30|regex:(^[^а-яА-ЯёЁ]+$)',
-            'login' => 'max:50',
-            'url' => 'nullable|max:255|url',
-            'comment' => 'nullable|max:255',
-            'tag' => 'nullable|regex:([\D]+(,[\D]+)*)|max:100'
-
+            'record.source' => 'required|min:2|max:50',
+            'record.password' => 'required|min:3|max:30|regex:(^[^а-яА-ЯёЁ]+$)',
+            'record.login' => 'max:50',
+            'record.url' => 'nullable|max:255|url',
+            'record.comment' => 'nullable|max:255',
+            'record.tag' => 'nullable|regex:([\D]+(,[\D]+)*)|max:100'
         ];
     }
 
     public function attributes()
     {
         return [
-            'source' => 'источник',
-            'pass' => 'пароль',
-            'login' => 'логин',
-            'url' => 'URL',
-            'comment' => 'комментарий',
-            'tag' => 'теги'
+            'record.source' => 'источник',
+            'record.password' => 'пароль',
+            'record.login' => 'логин',
+            'record.url' => 'URL',
+            'record.comment' => 'комментарий',
+            'record.tag' => 'теги'
         ];
     }
 
     public function messages()
     {
         return [
-            'source.required' => 'Поле \"От чего пароль\" является обязательным',
-            'source.min' => '\"От чего пароль\" не может быть меньше 2 символов',
-            'source.max' => '\"От чего пароль\" не может быть больше 50 символов',
-            'pass.required' => 'Поле \"Пароль\" является обязательным',
-            'pass.min' => 'Пароль не может быть меньше 3 символов',
-            'pass.max' => 'Пароль не может быть больше 30 символов',
-            'pass.regex' => 'Пароль не должен иметь кириллицу',
-            'login.max' => 'Логин не может быть больше 50 символов',
-            'url.max' => 'URL не может быть больше 255 символов',
-            'url.url' => 'Неверный формат URL',
-            'comment.max' => 'Комментарии должны быть не больше 255 символов',
-            'tag.regex' => 'Теги должны быть указаны через запятую',
-            'tag.max' => 'Теги должны быть не больше 100 символов'
+            'record.source.required' => 'Поле "От чего пароль" является обязательным',
+            'record.source.min' => '\"От чего пароль\" не может быть меньше 2 символов',
+            'record.source.max' => '\"От чего пароль\" не может быть больше 50 символов',
+            'record.password.required' => 'Поле \"Пароль\" является обязательным',
+            'record.password.min' => 'Пароль не может быть меньше 3 символов',
+            'record.password.max' => 'Пароль не может быть больше 30 символов',
+            'record.password.regex' => 'Пароль не должен иметь кириллицу',
+            'record.login.max' => 'Логин не может быть больше 50 символов',
+            'record.url.max' => 'URL не может быть больше 255 символов',
+            'record.url.url' => 'Неверный формат URL',
+            'record.comment.max' => 'Комментарии должны быть не больше 255 символов',
+            'record.tag.regex' => 'Теги должны быть указаны через запятую',
+            'record.tag.max' => 'Теги должны быть не больше 100 символов'
         ];
     }
 }

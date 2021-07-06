@@ -13,9 +13,15 @@ class RecordService
     }
     public function getRecords()
     {
-        $usersRoles = $this->getUser()->roles;
+        $user = $this->getUser();
+        $records[] = $user->records;
+        $userRoles = $user->roles;
+        foreach($userRoles as $userRole)
+        {
+            $records[] = $userRole->records;
+        }
 
-        return $usersRoles->find(request()->cookie('role_id'))->records ?? [];
+        return $records ?? [];
     }
 
     public function getPersonalRecords()

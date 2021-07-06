@@ -10,7 +10,7 @@
         <div class="form-group">
             <label for="role_choose">Сменить роль</label>
             <select class="form-control" name="role_choose" id="role_choose" value="{{request()->cookie('p')}}">
-                @foreach($roles as $role)
+                <!--@foreach($roles as $role)-->
                     <option value={{$role["id"]}}
                     @if($role["id"] == old('role_choose', request()->cookie('role_id')))
                         selected="selected"
@@ -68,29 +68,9 @@
             </div>
         </form>
     @endif
-    <h2>Личные пароли:</h2>
-        @forelse ($personal as $el)
-            <form method="get" action="{{ route('record-show', $el->id) }}">
-                <div class="alert alert-info">
-                    <h2>{{$el->source}}</h2>
-                    @if(isset($el->comment))
-                        <h3>{{$el->comment}}</h3>
-                    @endif
-                    @if(isset($el->login))
-                        <p>Логин: {{$el->login}}</p>
-                    @endif
-                    @if (isset($el->url))
-                        <p>URL: {{$el->url}}</p>
-                    @endif
-                        <p>Личная</p>
-                    <button type="submit" class="btn btn-success">Показать</button>
-                </div>
-            </form>
-        @empty
-            <h2>Личные пароли отсутствуют</h2>
-        @endforelse
     <h2>{{ App\Models\Role::find(request()->cookie('role_id'))->role }} пароли</h2>
-        @forelse ( $records as $el)
+        @forelse ( $records as $record)
+            @foreach($record as $el )
                 <form method="get" action="{{ route('record-show', $el->id) }}">
                     <div class="alert alert-info">
                         <h2>{{$el->source}}</h2>
@@ -106,6 +86,7 @@
                         <button type="submit" class="btn btn-success">Показать</button>
                     </div>
                 </form>
+                @endforeach
         @empty
             <h2>Выбранная роль не имеет паролей</h2>
         @endforelse
