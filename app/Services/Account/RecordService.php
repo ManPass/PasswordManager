@@ -5,6 +5,8 @@ namespace App\Services\Account;
 use App\Http\Requests\RecordRequest;
 use App\Models\Record;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Arr;
 
 class RecordService
 {
@@ -21,23 +23,45 @@ class RecordService
 
     /**
      * Получение всех записей, по выбранным ролям
-     * @return array
+     * @return Collection
      */
-    public function getRecords(): array
+    public function getRecords()
     {
+        $records = new Collection();
         $user = $this->getUser();
-        $records = [];
         if(request()->ispersonal)
         {
-            $records[] = $user->records;
+            foreach($user->records as $record)
+            {
+                if(!count($record->roles))
+                    $records->add($record);
+            }
         }
+        if(request()->input("roles") == null)
+        {
+            return $records;
+        }
+
         $userRoles = $this->getFilterRoles();
         foreach($userRoles as $userRole)
         {
-            $records[] = $userRole->records;
+            foreach($userRole->records as $record)
+            {
+                    $records->add($record);
+            }
         }
 
-        return $records;
+        return $records->unique();
+    }
+
+    public function attachRecord($record)
+    {
+        $user = $this->getUser();
+        $userRoles = $this->getFilterRoles();
+        foreach($userRoles as $userRole)
+        {
+            $record->roles()->attach($userRole["id"]);
+        }
     }
 
     public function addPersonalRecord($record)
@@ -48,10 +72,6 @@ class RecordService
     private function getFilterRoles()
     {
         $filterRoles = request()->input("roles");
-        if(!isset($filterRoles))
-        {
-            return $this->getUser()->roles ?? [];
-        }
         $needRoles = [];
         foreach($filterRoles as $frole)
         {
@@ -71,12 +91,21 @@ class RecordService
     {
         $choose = request()->choose;
         $search = request()->search;
-
-        $searchableRecords[] = $this->getUser()->records()->where($choose , 'LIKE' , '%' . $search . '%')->get();
+        $searchableRecords = new Collection();
+        $searchableArray[] = $this->getUser()->records()->where($choose , 'LIKE' , '%' . $search . '%')->get();
 
         foreach($this->getRoles() as $role)
         {
-            $searchableRecords[] = $role->records()->where($choose , 'LIKE' , '%' . $search . '%')->get();
+            $searchableArray[] = $role->records()->where($choose, 'LIKE', '%' . $search . '%')->get();
+        }
+
+        foreach($searchableArray as $collection)
+        {
+            foreach($collection as $record)
+            {
+                $searchableRecords->add($record);
+            }
+
         }
 
         return $searchableRecords;
@@ -86,8 +115,6 @@ class RecordService
     {
         return $this->getUser()->roles ?? [];
     }
-
-
 
     public function getRecord($id)
     {

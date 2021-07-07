@@ -39,9 +39,7 @@ Route::group(['middleware' => ['auth']],function () {
     Route::get('/panel_add_role_to_user','AdminController@addRoleToUser')->name('add-role-to-user')->middleware('admin');
 
     //admin
-    Route::get('/records/add', function(){
-        return view('add');
-    })->name('add');
+    Route::get('/records/add', 'RecordController@showAddView')->name('add');
 
     Route::post('records/submit/', 'RecordController@addRecord')->name('records-form');
 

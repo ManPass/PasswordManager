@@ -8,11 +8,11 @@
     <form method="get" action="{{route('records-data')}}">
 
         <div class="form-group">
-            <input type="checkbox" name="ispersonal" id="ispersonal" value="isPersonal">
+            <input type="checkbox" name="ispersonal" id="ispersonal" value="isPersonal" checked>
             <label for="personal">Отображать личное:</label><br>
             <label for="role_choose">Фильтр ролей:</label><br>
             @foreach($roles as $role)
-                <input type="checkbox" name="roles[]" id="roles[]" value="{{$role->role}}">
+                <input type="checkbox" name="roles[]" id="roles[]" value="{{$role->role}}" checked>
                 <label for="roles[]">{{$role->role}}</label><br>
             @endforeach
         </div>
@@ -61,11 +61,10 @@
             </div>
         </form>
     @endif
-        @forelse ( $records as $record)
-            @foreach($record as $el )
+        @forelse ( $records as $el)
                 <form method="get" action="{{ route('record-show', $el->id) }}">
                     <div class="alert alert-info">
-                        <h2>{{$el->source}}</h2>
+                        <h2><a href="{{route('record-show', $el->id)}}">{{$el->source}}</a></h2>
                         @forelse($el->roles as $role)
                             <h5>{{$role["role"]}}</h5>
                         @empty
@@ -78,12 +77,11 @@
                             <p>Логин: {{$el->login}}</p>
                         @endif
                         @if (isset($el->url))
-                            <p>URL: {{$el->url}}</p>
+                            <a href="{{$el->url}}">URL: {{$el->url}}</a>
                         @endif
-                        <button type="submit" class="btn btn-success">Показать</button>
+                        <br><button type="submit" class="btn btn-success">Показать</button>
                     </div>
                 </form>
-                @endforeach
         @empty
             <h2>Выбранная роль не имеет паролей</h2>
         @endforelse

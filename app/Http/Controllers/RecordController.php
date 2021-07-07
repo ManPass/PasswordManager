@@ -29,12 +29,21 @@ class RecordController extends Controller
         {
             $this->recordService->addPersonalRecord($record);
         }
-        else
+        if(request()->roles)
         {
-            $record->roles()->attach(request()->cookie('role_id'));
+            $this->recordService->attachRecord($record);
         }
-
+        if(!request()->personal && !request()->roles)
+        {
+            redirect()->route('add')->with("message", "Ошибка: выберите \"личное\" или роль(и) при добавлении!");
+        }
+        
         return redirect()->route('records-data');
+    }
+
+    public function showAddView()
+    {
+        return view("add", ['roles' => $this->recordService->getRoles()]);
     }
 
     //Показать конкретную запись

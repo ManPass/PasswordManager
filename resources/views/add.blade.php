@@ -10,6 +10,11 @@
 
 @section('content')
     <h1>Добавление пароля</h1>
+    @if(session('message'))
+        <div class="alert alert-danger">
+            {{session('message')}}
+        </div>
+    @endif
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
@@ -56,8 +61,18 @@
             <label>* - поле является обязательным для заполнения</label>
         </div>
 
+        <div class="form-group">
         <label for="personal">Личный пароль</label>
         <input type="checkbox" name="personal" id="personal" value="isPersonal">
+        </div>
+
+        <div class="form-group">
+            <label for="role_choose">Прикрепить к роли:</label><br>
+            @foreach($roles as $role)
+                <input type="checkbox" name="roles[]" id="roles[]" value="{{$role->role}}">
+                <label for="roles[]">{{$role->role}}</label><br>
+            @endforeach
+        </div>
 
         <button type="submit" class="btn btn-success">Сохранить</button>
 
