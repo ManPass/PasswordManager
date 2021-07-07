@@ -46,6 +46,10 @@ class RecordController extends Controller
     //Поиск записей
     public function searchRecord()
     {
+        if(!isset(request()->choose))
+        {
+            return redirect()->route('records-data')->with("message", "Не выбрана категория поиска");
+        }
         return view('myInfo',
             [
                 'records' => $this->recordService->getSearchableRecords(),

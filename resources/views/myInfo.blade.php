@@ -41,14 +41,10 @@
 @endsection
 
 @section('content')
-    @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{$error}}</li>
-            @endforeach
-        </ul>
-    </div>
+    @if(session('message'))
+        <div class="alert alert-danger">
+            {{session('message')}}
+        </div>
     @endif
     @if(request()->get('search') !== null)
         <h1>Результаты поиска по "{{request()->get('search')}}"</h1>

@@ -71,6 +71,7 @@ class RecordService
     {
         $choose = request()->choose;
         $search = request()->search;
+
         $searchableRecords[] = $this->getUser()->records()->where($choose , 'LIKE' , '%' . $search . '%')->get();
 
         foreach($this->getRoles() as $role)
