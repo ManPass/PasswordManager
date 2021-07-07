@@ -65,7 +65,6 @@
             </div>
         </form>
     @endif
-    <h2>{{ App\Models\Role::find(request()->cookie('role_id'))->role }} пароли</h2>
         @forelse ( $records as $record)
             @foreach($record as $el )
                 <form method="get" action="{{ route('record-show', $el->id) }}">

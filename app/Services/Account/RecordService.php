@@ -2,16 +2,28 @@
 
 namespace App\Services\Account;
 
+use App\Http\Requests\RecordRequest;
 use App\Models\Record;
 use App\Models\User;
 
 class RecordService
 {
+
+    /**
+     * Получение текущего юзера
+     * @return mixed
+     */
     private function getUser()
     {
         return User::find(request()->cookie('user_id'));
     }
-    public function getRecords()
+
+
+    /**
+     * Получение всех записей, по выбранным ролям
+     * @return array
+     */
+    public function getRecords(): array
     {
         $user = $this->getUser();
         $records = [];
@@ -28,17 +40,12 @@ class RecordService
         return $records;
     }
 
-    public function getPersonalRecords()
-    {
-        return $this->getUser()->records ?? [];
-    }
-
     public function addPersonalRecord($record)
     {
         $this->getUser()->records()->save($record);
     }
 
-    public function getFilterRoles()
+    private function getFilterRoles()
     {
         $filterRoles = request()->input("roles");
         if(!isset($filterRoles))
@@ -60,10 +67,25 @@ class RecordService
         return $needRoles;
     }
 
+    public function getSearchableRecords()
+    {
+        $choose = request()->choose;
+        $search = request()->search;
+        $searchableRecords[] = $this->getUser()->records()->where($choose , 'LIKE' , '%' . $search . '%')->get();
+
+        foreach($this->getRoles() as $role)
+        {
+            $searchableRecords[] = $role->records()->where($choose , 'LIKE' , '%' . $search . '%')->get();
+        }
+
+        return $searchableRecords;
+    }
+
     public function getRoles()
     {
         return $this->getUser()->roles ?? [];
     }
+
 
 
     public function getRecord($id)

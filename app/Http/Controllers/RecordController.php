@@ -44,12 +44,11 @@ class RecordController extends Controller
     }
 
     //Поиск записей
-    public function searchRecord(Request $req)
+    public function searchRecord()
     {
         return view('myInfo',
             [
-                'records' => $this->recordService->getRecords()->where($req->choose, $req->search),
-                'personal' => $this->recordService->getPersonalRecords()->where($req->choose, $req->search),
+                'records' => $this->recordService->getSearchableRecords(),
                 'roles' => $this->recordService->getRoles()
             ]);
     }
