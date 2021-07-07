@@ -74,6 +74,12 @@
                 <form method="get" action="{{ route('record-show', $el->id) }}">
                     <div class="alert alert-info">
                         <h2>{{$el->source}}</h2>
+                        @forelse($el->roles as $role)
+                            <h5>{{$role["role"]}}</h5>
+                        @empty
+                            <h5>Личное</h5>
+                        @endforelse
+
                         @if(isset($el->comment))
                             <h3>{{$el->comment}}</h3>
                         @endif
