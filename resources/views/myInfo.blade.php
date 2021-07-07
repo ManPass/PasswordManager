@@ -5,19 +5,16 @@
 @endsection
 
 @section('aside')
-    <form method="get" action="{{route('change-role')}}">
+    <form method="get" action="{{route('records-data')}}">
 
         <div class="form-group">
-            <label for="role_choose">Сменить роль</label>
-            <select class="form-control" name="role_choose" id="role_choose" value="{{request()->cookie('p')}}">
-                @foreach($roles as $role)
-                    <option value={{$role["id"]}}
-                    @if($role["id"] == old('role_choose', request()->cookie('role_id')))
-                        selected="selected"
-                        @endif
-                    >{{$role["role"]}}</option>
-                @endforeach
-            </select>
+            <input type="checkbox" name="ispersonal" id="ispersonal" value="isPersonal" checked>
+            <label for="personal">Отображать личное:</label><br>
+            <label for="role_choose">Фильтр ролей:</label><br>
+            @foreach($roles as $role)
+                <input type="checkbox" name="roles[]" id="roles[]" value="{{$role->role}}" checked>
+                <label for="roles[]">{{$role->role}}</label><br>
+            @endforeach
         </div>
 
         <div class = "form-group">
@@ -44,14 +41,10 @@
 @endsection
 
 @section('content')
-    @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{$error}}</li>
-            @endforeach
-        </ul>
-    </div>
+    @if(session('message'))
+        <div class="alert alert-danger">
+            {{session('message')}}
+        </div>
     @endif
     @if(request()->get('search') !== null)
         <h1>Результаты поиска по "{{request()->get('search')}}"</h1>
@@ -68,32 +61,15 @@
             </div>
         </form>
     @endif
-    <h2>Личные пароли:</h2>
-        @forelse ($personal as $el)
-            <form method="get" action="{{ route('record-show', $el->id) }}">
-                <div class="alert alert-info">
-                    <h2>{{$el->source}}</h2>
-                    @if(isset($el->comment))
-                        <h3>{{$el->comment}}</h3>
-                    @endif
-                    @if(isset($el->login))
-                        <p>Логин: {{$el->login}}</p>
-                    @endif
-                    @if (isset($el->url))
-                        <p>URL: {{$el->url}}</p>
-                    @endif
-                        <p>Личная</p>
-                    <button type="submit" class="btn btn-success">Показать</button>
-                </div>
-            </form>
-        @empty
-            <h2>Личные пароли отсутствуют</h2>
-        @endforelse
-    <h2>{{ App\Models\Role::find(request()->cookie('role_id'))->role }} пароли</h2>
         @forelse ( $records as $el)
                 <form method="get" action="{{ route('record-show', $el->id) }}">
                     <div class="alert alert-info">
-                        <h2>{{$el->source}}</h2>
+                        <h2><a href="{{route('record-show', $el->id)}}">{{$el->source}}</a></h2>
+                        @forelse($el->roles as $role)
+                            <h5>{{$role["role"]}}</h5>
+                        @empty
+                            <h5>Личное</h5>
+                        @endforelse
                         @if(isset($el->comment))
                             <h3>{{$el->comment}}</h3>
                         @endif
@@ -101,9 +77,9 @@
                             <p>Логин: {{$el->login}}</p>
                         @endif
                         @if (isset($el->url))
-                            <p>URL: {{$el->url}}</p>
+                            <a href="{{$el->url}}">URL: {{$el->url}}</a>
                         @endif
-                        <button type="submit" class="btn btn-success">Показать</button>
+                        <br><button type="submit" class="btn btn-success">Показать</button>
                     </div>
                 </form>
         @empty

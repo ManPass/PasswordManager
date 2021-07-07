@@ -8,6 +8,9 @@ use App\Http\Requests\RecordRequest;
 use App\Models\Record;
 use Illuminate\Http\RedirectResponse;
 use App\Services\Account\RecordService;
+use Illuminate\Support\Facades\Redirect;
+use Symfony\Component\Console\Input\Input;
+
 class RecordController extends Controller
 {
     protected $recordService;
@@ -21,27 +24,26 @@ class RecordController extends Controller
      */
     public function addRecord(RecordRequest $req): RedirectResponse
     {
-        $record = Record::create(
-            [
-                'source' => $req->source,
-                'password' => $req->pass,
-                'login' => $req->login_rec,
-                'url' => $req->url,
-                'comment' => $req->comment,
-                'tag' => $req->tag
-            ]
-        );
+        $record = Record::create($req->record);
         if(request()->personal)
         {
             $this->recordService->addPersonalRecord($record);
         }
-        else
+        if(request()->roles)
         {
-            $record->roles()->attach($req->cookie('role_id'));
+            $this->recordService->attachRecord($record);
         }
-
-
+        if(!request()->personal && !request()->roles)
+        {
+            redirect()->route('add')->with("message", "Ошибка: выберите \"личное\" или роль(и) при добавлении!");
+        }
+        
         return redirect()->route('records-data');
+    }
+
+    public function showAddView()
+    {
+        return view("add", ['roles' => $this->recordService->getRoles()]);
     }
 
     //Показать конкретную запись
@@ -51,12 +53,15 @@ class RecordController extends Controller
     }
 
     //Поиск записей
-    public function searchRecord(Request $req)
+    public function searchRecord()
     {
+        if(!isset(request()->choose))
+        {
+            return redirect()->route('records-data')->with("message", "Не выбрана категория поиска");
+        }
         return view('myInfo',
             [
-                'records' => $this->recordService->getRecords()->where($req->choose, $req->search),
-                'personal' => $this->recordService->getPersonalRecords()->where($req->choose, $req->search),
+                'records' => $this->recordService->getSearchableRecords(),
                 'roles' => $this->recordService->getRoles()
             ]);
     }
@@ -65,12 +70,12 @@ class RecordController extends Controller
     public function updateRecord($id, RecordRequest $request): RedirectResponse
     {
         $record = $this->recordService->getRecord($id);
-        $record->source = $request->input('source');
-        $record->password = $request->input('pass');
-        $record->login = $request->input('login_rec');
-        $record->url = $request->input('url');
-        $record->comment = $request->input('comment');
-        $record->tag = $request->input('tag');
+        $record->source = $request->record["source"];
+        $record->password = $request->record["password"];
+        $record->login = $request->record["login"];
+        $record->url = $request->record["url"];
+        $record->comment = $request->record["comment"];
+        $record->tag = $request->record["tag"];
 
         $record->save();
 
@@ -78,17 +83,25 @@ class RecordController extends Controller
     }
 
     //Показ всех записей
-    public function showAllRecords()
+    /*public function showAllRecords()
     {
         return view("myInfo", [
             'records' => $this->recordService->getRecords(),
             'personal' => $this->recordService->getPersonalRecords(),
             'roles' => $this->recordService->getRoles()
         ]);
+    } */
+
+    public function showAllRecords()
+    {
+        return view("myInfo", ['records' => $this->recordService->getRecords(),
+        'roles' => $this->recordService->getRoles()]);
     }
 
     //Переход на редактирование записи
     public function editRecord($id){
+        $req = new RecordRequest();
+
         return view('edit', ['data' => $this->recordService->getRecord($id)]); //по айдишнику переходим на редактирование записи
     }
 

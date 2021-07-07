@@ -11,9 +11,9 @@ class Record extends Model
     protected $fillable = ['source', 'password', 'login', 'url', 'comment', 'tag'];
     use HasFactory;
 
-    public function getPasswordAttribute($value)
+    public function getPasswordAttribute()
     {
-        return decrypt($value);
+        return decrypt($this->attributes['password']);
     }
 
     public function setPasswordAttribute($value)

@@ -38,13 +38,11 @@ Route::group(['middleware' => ['auth']],function () {
     Route::get('/panel_add_role','AdminController@addRole')->name('add-role')->middleware('admin');
     Route::get('/panel_del','AdminController@deleteRoleToUser')->name('delete-role-to-user')->middleware('admin');
     Route::get('/panel_add_role_to_user','AdminController@addRoleToUser')->name('add-role-to-user')->middleware('admin');
-    //admin
-    Route::get('/records/add', function(){
-        return view('add');
-    })->name('add');
 
-    Route::post('records/submit',
-        'RecordController@addRecord')->name('records-form');
+    //admin
+    Route::get('/records/add', 'RecordController@showAddView')->name('add');
+
+    Route::post('records/submit/', 'RecordController@addRecord')->name('records-form');
 
     Route::get('records/changerole',
         'RoleController@changeSelectedRole')->name('change-role');
