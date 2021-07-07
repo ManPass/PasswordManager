@@ -15,17 +15,17 @@ class MailChangeRequest extends FormRequest
     {
         return true;
     }
-
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
+/*
+* Get the validation rules that apply to the request.
+*
+* @return array
+*/
     public function rules()
     {
         return [
             'email' => 'required|email',
             'password' => 'required|min:5|max:15'
         ];
+
     }
 }

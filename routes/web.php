@@ -26,7 +26,8 @@ Route::get('/registration',function(){
 })->name('registration')->middleware('repeater');
 //registration-submith
 Route::post('/login','AuthController@registration')->name('registration-submith');
-
+//email
+Route::get('/test','EmailController@test')->name('EmailTest');
 /*
 *Здесь покоятся роуты которые должны быть под защитой
 *помещяйте все роуты для которых необходима авторизация
