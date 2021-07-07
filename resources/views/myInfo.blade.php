@@ -5,19 +5,16 @@
 @endsection
 
 @section('aside')
-    <form method="get" action="{{route('change-role')}}">
+    <form method="get" action="{{route('records-data')}}">
 
         <div class="form-group">
-            <label for="role_choose">Сменить роль</label>
-            <select class="form-control" name="role_choose" id="role_choose" value="{{request()->cookie('p')}}">
-                <!--@foreach($roles as $role)-->
-                    <option value={{$role["id"]}}
-                    @if($role["id"] == old('role_choose', request()->cookie('role_id')))
-                        selected="selected"
-                        @endif
-                    >{{$role["role"]}}</option>
-                @endforeach
-            </select>
+            <input type="checkbox" name="ispersonal" id="ispersonal" value="isPersonal">
+            <label for="personal">Отображать личное:</label><br>
+            <label for="role_choose">Фильтр ролей:</label><br>
+            @foreach($roles as $role)
+                <input type="checkbox" name="roles[]" id="roles[]" value="{{$role->role}}">
+                <label for="roles[]">{{$role->role}}</label><br>
+            @endforeach
         </div>
 
         <div class = "form-group">
@@ -79,7 +76,6 @@
                         @empty
                             <h5>Личное</h5>
                         @endforelse
-
                         @if(isset($el->comment))
                             <h3>{{$el->comment}}</h3>
                         @endif

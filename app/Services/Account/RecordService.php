@@ -14,14 +14,18 @@ class RecordService
     public function getRecords()
     {
         $user = $this->getUser();
-        $records[] = $user->records;
-        $userRoles = $user->roles;
+        $records = [];
+        if(request()->ispersonal)
+        {
+            $records[] = $user->records;
+        }
+        $userRoles = $this->getFilterRoles();
         foreach($userRoles as $userRole)
         {
             $records[] = $userRole->records;
         }
 
-        return $records ?? [];
+        return $records;
     }
 
     public function getPersonalRecords()
@@ -32,6 +36,28 @@ class RecordService
     public function addPersonalRecord($record)
     {
         $this->getUser()->records()->save($record);
+    }
+
+    public function getFilterRoles()
+    {
+        $filterRoles = request()->input("roles");
+        if(!isset($filterRoles))
+        {
+            return $this->getUser()->roles ?? [];
+        }
+        $needRoles = [];
+        foreach($filterRoles as $frole)
+        {
+            foreach($this->getUser()->roles as $role)
+            {
+                if($role->role == $frole)
+                {
+                    $needRoles[] = $role;
+                }
+            }
+        }
+
+        return $needRoles;
     }
 
     public function getRoles()
