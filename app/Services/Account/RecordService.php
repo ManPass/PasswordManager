@@ -38,10 +38,13 @@ class RecordService
                     $records->add($record);
             }
         }
+
         //Если не нужно отображать ролевые пароли, вернуть только личные
         if(request()->input("roles") == null)
         {
-            return $records;
+            //Если паролей для отображения, тогда отобразить все
+            if(count($records)) return $records;
+            else return $this->getAllRecords();
         }
 
         //Получить пароли выбранных ролей
@@ -50,7 +53,7 @@ class RecordService
         {
             foreach($userRole->records as $record)
             {
-                    $records->add($record);
+                $records->add($record);
             }
         }
 
@@ -131,15 +134,14 @@ class RecordService
             }
 
         }
-
         return $searchableRecords;
     }
 
     /**
      * Получение всех ролей пользователя
-     * @return array
+     * @return mixed
      */
-    public function getRoles(): array
+    public function getRoles()
     {
         return $this->getUser()->roles ?? [];
     }
@@ -152,5 +154,23 @@ class RecordService
     public function getRecord($id)
     {
         return Record::find($id);
+    }
+
+    private function getAllRecords()
+    {
+        $records = new Collection();
+        foreach($this->getUser()->records as $record)
+        {
+            $records->add($record);
+        }
+        foreach($this->getRoles() as $role)
+        {
+            foreach($role->records as $record)
+            {
+                $records->add($record);
+            }
+        }
+
+        return $records->unique();
     }
 }
