@@ -19,42 +19,57 @@ class RecordController extends Controller
     {
         $this->recordService = $recordService;
     }
-    /*
-     * Добавление новой записи
+
+    /**
+     * Добавление нового пароля
+     * @param RecordRequest $req
+     * @return RedirectResponse
      */
     public function addRecord(RecordRequest $req): RedirectResponse
     {
         $record = Record::create($req->record);
+        //Если указано, что пароль личный...
         if(request()->personal)
         {
             $this->recordService->addPersonalRecord($record);
         }
+        //Если указаны роли...
         if(request()->roles)
         {
             $this->recordService->attachRecord($record);
         }
+        //Если не то и не другое...
         if(!request()->personal && !request()->roles)
         {
             redirect()->route('add')->with("message", "Ошибка: выберите \"личное\" или роль(и) при добавлении!");
         }
-        
+
         return redirect()->route('records-data');
     }
 
+    /**
+     * Метод для отображения страницы добавления с передачей ролей для чекбоксов
+     */
     public function showAddView()
     {
         return view("add", ['roles' => $this->recordService->getRoles()]);
     }
 
-    //Показать конкретную запись
+    /**
+     * @param $id
+     * Отображение конкретного пароля
+     */
     public function showRecord($id)
     {
         return view('show', ['data' => $this->recordService->getRecord($id)]);
     }
 
-    //Поиск записей
+    /**
+     * Поиск паролей
+     */
     public function searchRecord()
     {
+        //Если не выбрана категория поиска...
         if(!isset(request()->choose))
         {
             return redirect()->route('records-data')->with("message", "Не выбрана категория поиска");
@@ -82,30 +97,29 @@ class RecordController extends Controller
         return redirect()->route('records-data');
     }
 
-    //Показ всех записей
-    /*public function showAllRecords()
-    {
-        return view("myInfo", [
-            'records' => $this->recordService->getRecords(),
-            'personal' => $this->recordService->getPersonalRecords(),
-            'roles' => $this->recordService->getRoles()
-        ]);
-    } */
 
+    /**
+     * Отображение всех паролей. Роли нужны для чекбоксов
+     */
     public function showAllRecords()
     {
         return view("myInfo", ['records' => $this->recordService->getRecords(),
         'roles' => $this->recordService->getRoles()]);
     }
 
-    //Переход на редактирование записи
+    /**
+     * @param $id
+     * Переход на редактирование конкретного пароля
+     */
     public function editRecord($id){
-        $req = new RecordRequest();
-
-        return view('edit', ['data' => $this->recordService->getRecord($id)]); //по айдишнику переходим на редактирование записи
+        return view('edit', ['data' => $this->recordService->getRecord($id)]);
     }
 
-    //Удаление записи
+    /**
+     * Удаление пароля
+     * @param $id
+     * @return RedirectResponse
+     */
     public function deleteRecord($id): RedirectResponse
     {
         $this->recordService->getRecord($id)->delete();

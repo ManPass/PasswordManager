@@ -29,6 +29,7 @@ class RecordService
     {
         $records = new Collection();
         $user = $this->getUser();
+        //Если нужно отобразить личные, получить все личные пароли
         if(request()->ispersonal)
         {
             foreach($user->records as $record)
@@ -37,11 +38,13 @@ class RecordService
                     $records->add($record);
             }
         }
+        //Если не нужно отображать ролевые пароли, вернуть только личные
         if(request()->input("roles") == null)
         {
             return $records;
         }
 
+        //Получить пароли выбранных ролей
         $userRoles = $this->getFilterRoles();
         foreach($userRoles as $userRole)
         {
@@ -51,12 +54,17 @@ class RecordService
             }
         }
 
+        //Предотвратить повторение паролей
         return $records->unique();
     }
 
+    /**
+     * Добавление ролевого пароля
+     * @param $record
+     */
     public function attachRecord($record)
     {
-        $user = $this->getUser();
+        //Получить все роли, выбранные юзером и присоединить к ним добавленный пароль
         $userRoles = $this->getFilterRoles();
         foreach($userRoles as $userRole)
         {
@@ -64,12 +72,20 @@ class RecordService
         }
     }
 
+    /**
+     * Добавление личного пароля
+     * @param $record
+     */
     public function addPersonalRecord($record)
     {
         $this->getUser()->records()->save($record);
     }
 
-    private function getFilterRoles()
+    /**
+     * Получение всех ролей, выбранных юзером
+     * @return array
+     */
+    private function getFilterRoles(): array
     {
         $filterRoles = request()->input("roles");
         $needRoles = [];
@@ -87,18 +103,26 @@ class RecordService
         return $needRoles;
     }
 
-    public function getSearchableRecords()
+    /**
+     * Получение всех искомых паролей
+     * @return Collection
+     */
+    public function getSearchableRecords(): Collection
     {
         $choose = request()->choose;
         $search = request()->search;
+        //Объявление коллекции (массив не подойдёт)
         $searchableRecords = new Collection();
+        //Поиск паролей среди личных
         $searchableArray[] = $this->getUser()->records()->where($choose , 'LIKE' , '%' . $search . '%')->get();
 
+        //Поиск паролей среди ролевых
         foreach($this->getRoles() as $role)
         {
             $searchableArray[] = $role->records()->where($choose, 'LIKE', '%' . $search . '%')->get();
         }
 
+        //Передача всех найденных паролей в коллекцию
         foreach($searchableArray as $collection)
         {
             foreach($collection as $record)
@@ -111,11 +135,20 @@ class RecordService
         return $searchableRecords;
     }
 
-    public function getRoles()
+    /**
+     * Получение всех ролей пользователя
+     * @return array
+     */
+    public function getRoles(): array
     {
         return $this->getUser()->roles ?? [];
     }
 
+    /**
+     * Поиск нужного пароля
+     * @param $id
+     * @return mixed
+     */
     public function getRecord($id)
     {
         return Record::find($id);
