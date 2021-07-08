@@ -60,6 +60,7 @@ class AuthPolice
         }
         return null;
     }
+
     public function extendedRights(User $user):bool{
         $role = ($user->roles->where('role','Admin')->first());
         if ($role!= null){
