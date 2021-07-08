@@ -4,6 +4,7 @@
 namespace App\Services\Auth;
 
 
+use App\Models\Expectant;
 use App\Models\User;
 use App\Policies\AuthPolice;
 use Illuminate\Http\Request;
@@ -33,8 +34,18 @@ class AuthService
                 ]
             );
             $user->save();
-
-            $user->roles()->attach(1);
+            /**
+             *заготовка для регистрации с подтверждением логина, замена для кода выше
+             *сохраняет введенные данные пользователя в ожидателя, на почту отправляется
+             *ссылка на подобии localhost:8000/registration-confirm-{{token}}, будет
+             *ссылка будет является временной, если срок истем то Link not valid
+            */
+            $userQueue = Expectant::create([
+                'login' => $request->input('login'),
+                'password' => Hash::make($request->input('password')),
+                'token'=> Hash::make(Str::random(60))
+            ]);
+            $userQueue->save();
 
             return true;
     }

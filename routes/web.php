@@ -54,16 +54,16 @@ Route::group(['middleware' => ['auth']],function () {
         'RecordController@searchRecord')->name('search');
 
     Route::get('records/show/{id}',
-        'RecordController@showRecord')->name('record-show'); //просмотр
+        'RecordController@showRecord')->name('record-show')->middleware('records_available'); //просмотр
 
     Route::post('records/edit/{id}/update',
-        'RecordController@updateRecord')->name('record-update');
+        'RecordController@updateRecord')->name('record-update')->middleware('records_available');
 
     Route::get('records/edit/{id}',
-        'RecordController@editRecord')->name('record-edit'); //для изменения запИси
+        'RecordController@editRecord')->name('record-edit')->middleware('records_available'); //для изменения запИси
 
     Route::get('records/delete/{id}',
-        'RecordController@deleteRecord')->name('record-delete');//для удаления
+        'RecordController@deleteRecord')->name('record-delete')->middleware('records_available');//для удаления
 
     Route::get('/profile',
         'ProfileController@viewProfile')->name('profile-data');
