@@ -29,6 +29,13 @@ class RecordsPolicies
             return true;
         return false;
     }
+
+    /***
+     * @param $user
+     * @param $record
+     * @return bool
+     * хоть и выглядит как N^2, но почти всегда у записи 1 роль так что средняя работа почти всегда N
+     */
     private function roleConfirmation($user,$record):bool{
         foreach ($user->roles as $userRoleModel){
             foreach ($record->roles as $recordRoleModel){

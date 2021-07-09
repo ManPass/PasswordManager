@@ -27,7 +27,7 @@ Route::get('/registration',function(){
 //registration-submith
 Route::post('/login','AuthController@registration')->name('registration-submith');
 //email
-Route::get('/test','EmailController@test')->name('EmailTest');
+Route::get('/auth/registration-confirm','AuthController@registrationConfirm')->name('registration-confirm');
 /*
 *Здесь покоятся роуты которые должны быть под защитой
 *помещяйте все роуты для которых необходима авторизация
