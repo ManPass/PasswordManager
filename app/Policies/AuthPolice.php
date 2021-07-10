@@ -22,11 +22,8 @@ class AuthPolice
     }
 
     public function uniqueLogin(string $login):bool{
-        foreach (User::all() as $user) {
-            if ($login === $user->login)
-                return false;
-        }
-        return true;
+        if (User::where('login',$login)->first() == null) return true;
+        else return false;
     }
     public function userExists(Request $request): ?User{
         $user = User::where('login',$request->input('login'))->first();

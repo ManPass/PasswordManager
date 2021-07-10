@@ -8,27 +8,23 @@ use App\Services\Admin\AdminService;
 use Illuminate\Http\Request;
 class AdminController extends Controller
 {
-    protected $adminService;
-    public function __construct(AdminService $adminService){
-        $this->adminService = $adminService;
-    }
-    public function showAllUsers(Request $request){
-        return view('admin/admin-page',['data'=> $this->adminService->showAllUsers($request) ,
+    public function showAllUsers(Request $request, AdminService $adminService){
+        return view('admin/admin-page',['data'=> $adminService->showAllUsers($request) ,
             'roles' => Role::all()]);
     }
-    public function addRole(Request $request){
-        $this->adminService->addRole($request);
+    public function addRole(Request $request,AdminService $adminService){
+        $adminService->addRole($request);
 
         return redirect()->route('admin-page',['answer' => 'ok']);
     }
-    public function deleteRoleToUser(Request $request){
-        $this->adminService->deleteRoleToUser($request);
+    public function deleteRoleToUser(Request $request,AdminService $adminService){
+        $adminService->deleteRoleToUser($request);
 
         return redirect()->route('admin-page',['answer' => 'role_successful_deleted']);
     }
-    public function addRoleToUser(Request $request){
+    public function addRoleToUser(Request $request,AdminService $adminService){
 
-        $this->adminService->addRoleToUser($request);
+        $adminService->addRoleToUser($request);
         return redirect()->route('admin-page',['answer' => 'role_successful_add']);
     }
 }

@@ -17,9 +17,7 @@ class AuthService
 
     public function __construct(AuthPolice $authPolice){
         $this->authPolice = $authPolice;//является зависимостью для класса AuthService, поэтому иньъекция через конструктор
-
     }
-
     /**
      * @param Request $request
      * @return bool
@@ -56,10 +54,11 @@ class AuthService
 
             return true;
     }
+    public function getUserByVerifivation(Request $request){
+        return $this->authPolice->userExists($request);
+    }
     public function loginValid(Request $request ){
-        $user = $this->authPolice->userExists($request);//проверка введенных данных
-        if ($user == null) return null;
-        return $user;
+        return $this->authPolice->uniqueLogin($request->input('login'));
     }
 
 }
