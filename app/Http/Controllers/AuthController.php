@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ChangePasswordRequest;
 use App\Http\Requests\RegRequest;
+use App\Http\Requests\ResetRequest;
 use App\Models\Expectant;
 use App\Services\Auth\AuthService;
 use App\Services\Auth\CookieService;
@@ -40,5 +42,24 @@ class AuthController extends Controller
     public function logout(){
         return redirect()->route('login')->withCookie(Cookie::forget('role_id'))->
         withCookie(Cookie::forget('token'))->withCookie(Cookie::forget('user_id'));
+    }
+
+    public  function forgotPassword(){
+        return view('auth/forgot_pass');
+    }
+    public  function forgotPasswordSubmit(ResetRequest $request,AuthService $authService){
+        if ($authService->resetPasswordValid($request,new EmailService()) == true)
+            return redirect()->route('forgot-password')->with('message_success','проверьте свою почту');
+        else return redirect()->route('forgot-password')->with('message','почта не найдена');
+    }
+    public  function resetPassword(Request $request){
+        return view('auth/change_password')->with('token',$request->input('token'));
+    }
+    public function resetPasswordSubmit(ChangePasswordRequest $request,AuthService $authService){
+
+        if($authService->changePassword($request) == true)
+            return redirect()->route('login')->with('message_success','Пароль успешно изменен');
+        else return redirect()->back()->with('message','Reset password session is invalid');
+
     }
 }

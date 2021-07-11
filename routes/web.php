@@ -31,6 +31,10 @@ Route::post('/login','AuthController@registration')->name('registration-submith'
 Route::get('/auth/registration-confirm','AuthController@registrationConfirm')->name('registration-confirm');
     //reset password
 Route::get('/auth/password-reset','AuthController@resetPassword')->name('reset-password');
+Route::post('/auth/password-reset-submit','AuthController@resetPasswordSubmit')->name('reset-password-submit');
+    //forgot password
+Route::get('/forgot-password','AuthController@forgotPassword')->name('forgot-password');
+Route::get('/forgot-password-submit','AuthController@forgotPasswordSubmit')->name('forgot-password-submit');
 /*
 *Здесь покоятся роуты которые должны быть под защитой
 *помещяйте все роуты для которых необходима авторизация

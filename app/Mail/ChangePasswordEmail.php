@@ -7,16 +7,16 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class ConfirmEmail extends Mailable
+class ChangePasswordEmail extends Mailable
 {
     use Queueable, SerializesModels;
-    public $link;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
+    public $link;
     public function __construct($link)
     {
         $this->link = $link;
@@ -29,6 +29,6 @@ class ConfirmEmail extends Mailable
      */
     public function build()
     {
-        return $this->view('Email.confirm_email');
+        return $this->view('Email.change_password_email');
     }
 }
