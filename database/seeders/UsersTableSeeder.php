@@ -25,7 +25,7 @@ class UsersTableSeeder extends Seeder
             'login'=>'root@gmail.com',
             'password'=> Hash::make('root')
         ]);
-        $this->userService->addRole(Role::where('login','admin')->first()->id,'root@gmail.com');
+        $this->userService->addRole(Role::where('role','Admin')->first()->id,'root@gmail.com');
 
     }
 }
