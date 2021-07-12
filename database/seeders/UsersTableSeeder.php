@@ -22,7 +22,7 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'login'=>'root@gmial.com',
+            'login'=>'root@gmail.com',
             'password'=> Hash::make('root')
         ]);
         $this->userService->addRole(Role::where('login','admin')->first()->id,'root@gmail.com');
